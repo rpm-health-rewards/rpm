@@ -2,7 +2,7 @@ const CACHE_NAME = "rpm-rewards-patient-v1";
 
 const APP_SHELL = [
   "./",
-  "./index.html",
+  "./rpm.html",
   "./manifest.webmanifest",
   "./offline.html",
   "./icons/icon-192.png",
