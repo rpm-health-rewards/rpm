@@ -5,43 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta
     name="description"
-    content="RPM Rewards Provider Portal prototype"
+    content="RPM Health Rewards is a remote patient monitoring and outcomes rewards platform for providers and patients."
   />
-  <title>RPM Rewards | Provider Portal</title>
+  <meta name="theme-color" content="#102a43" />
+
+  <title>RPM Health Rewards | Better Monitoring. Better Outcomes.</title>
 
   <style>
     :root {
       --navy: #102a43;
-      --navy-deep: #092237;
+      --navy-deep: #081c2c;
       --blue: #1976d2;
       --blue-dark: #0e5fae;
       --blue-soft: #e8f2ff;
       --teal: #078878;
+      --teal-dark: #056e62;
       --teal-soft: #e7faf6;
       --green: #14804a;
       --green-soft: #e9f8ef;
       --amber: #a05b00;
-      --amber-soft: #fff4df;
       --red: #b42318;
       --red-soft: #fff0ef;
-      --purple: #6d3ba3;
-      --purple-soft: #f3eafe;
       --slate-900: #172b4d;
       --slate-800: #253858;
       --slate-700: #42526e;
       --slate-600: #5e6c84;
       --slate-500: #6b778c;
-      --slate-400: #8993a4;
       --slate-300: #c1c7d0;
       --slate-200: #dfe1e6;
       --slate-100: #f4f5f7;
       --white: #ffffff;
-      --shadow: 0 14px 40px rgba(16, 42, 67, 0.1);
-      --shadow-lg: 0 24px 65px rgba(16, 42, 67, 0.22);
-      --radius-xl: 22px;
-      --radius-lg: 16px;
-      --radius-md: 12px;
-      --radius-sm: 9px;
+      --shadow: 0 14px 40px rgba(16, 42, 67, 0.10);
+      --radius-xl: 24px;
+      --radius-lg: 17px;
+      --radius-md: 13px;
+      --radius-sm: 10px;
     }
 
     * {
@@ -49,24 +47,28 @@
     }
 
     html {
-      min-height: 100%;
-      background: #edf3f8;
+      scroll-behavior: smooth;
+      background: #f4f8fb;
     }
 
     body {
-      min-height: 100vh;
+      min-width: 320px;
       margin: 0;
       color: var(--slate-900);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
         "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at 8% 0%, rgba(38, 132, 255, 0.16), transparent 30rem),
-        linear-gradient(160deg, #edf6fc 0%, #f7fafc 48%, #e9f0f5 100%);
+        radial-gradient(circle at 2% 0%, rgba(38, 132, 255, 0.12), transparent 33rem),
+        linear-gradient(165deg, #f1f8fc 0%, #ffffff 36%, #f4f8fb 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     button,
     input,
-    select,
     textarea {
       font: inherit;
     }
@@ -77,129 +79,153 @@
 
     button:disabled {
       cursor: not-allowed;
-      opacity: 0.62;
+      opacity: 0.65;
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    .screen {
-      display: none;
-      animation: fade-in 200ms ease-out;
-    }
-
-    .screen.active {
-      display: block;
-    }
-
-    @keyframes fade-in {
-      from {
-        opacity: 0;
-        transform: translateY(5px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .app-shell {
-      width: min(100%, 1480px);
+    .site-shell {
+      width: min(100%, 1320px);
       margin: 0 auto;
-      padding: 20px 22px 38px;
+      padding: 0 22px;
     }
 
-    .topbar {
+    .site-header {
+      position: sticky;
+      z-index: 100;
+      top: 0;
+      border-bottom: 1px solid rgba(193, 199, 208, 0.7);
+      background: rgba(248, 251, 253, 0.92);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      margin: 2px 0 22px;
+      gap: 20px;
+      min-height: 74px;
     }
 
     .brand {
       display: flex;
+      flex: 0 0 auto;
       align-items: center;
       gap: 11px;
       color: var(--navy);
+      font-size: 1.02rem;
       font-weight: 850;
       letter-spacing: -0.025em;
     }
 
     .brand-mark {
       display: grid;
-      width: 40px;
-      height: 40px;
+      width: 41px;
+      height: 41px;
       place-items: center;
       color: var(--white);
-      font-size: 20px;
+      font-size: 1.15rem;
       border-radius: 13px;
       background: linear-gradient(135deg, #1266b0, #00a58b);
-      box-shadow: 0 6px 16px rgba(25, 118, 210, 0.25);
+      box-shadow: 0 7px 18px rgba(25, 118, 210, 0.22);
     }
 
-    .topbar-actions {
+    .desktop-nav {
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 3px;
     }
 
-    .prototype-badge {
-      padding: 7px 10px;
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 11px;
+      color: var(--slate-700);
+      font-size: 0.85rem;
+      font-weight: 760;
+      border-radius: 9px;
+      transition: color 160ms ease, background 160ms ease;
+    }
+
+    .nav-link:hover {
+      color: var(--blue-dark);
+      background: var(--blue-soft);
+    }
+
+    .nav-link.portal-link {
+      color: var(--blue-dark);
+    }
+
+    .key-icon {
+      display: inline-grid;
+      width: 17px;
+      height: 17px;
+      place-items: center;
       color: var(--amber);
-      font-size: 0.72rem;
+      font-size: 0.95rem;
+    }
+
+    .nav-cta {
+      margin-left: 6px;
+      padding: 10px 14px;
+      color: var(--white);
+      font-size: 0.84rem;
+      font-weight: 800;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #176fc0, #0960b1);
+      box-shadow: 0 7px 14px rgba(25, 118, 210, 0.18);
+    }
+
+    .mobile-menu-button {
+      display: none;
+      width: 42px;
+      height: 42px;
+      color: var(--navy);
+      font-size: 1.35rem;
+      border: 1px solid var(--slate-300);
+      border-radius: 11px;
+      background: var(--white);
+    }
+
+    .mobile-nav {
+      display: none;
+      padding: 0 0 14px;
+    }
+
+    .mobile-nav.open {
+      display: grid;
+      gap: 5px;
+    }
+
+    .mobile-nav .nav-link {
+      padding: 12px;
+      border: 1px solid transparent;
+    }
+
+    .mobile-nav .nav-link:hover {
+      border-color: #cfe1f4;
+    }
+
+    section {
+      scroll-margin-top: 94px;
+    }
+
+    .section {
+      padding: 88px 0;
+    }
+
+    .section-heading {
+      max-width: 720px;
+      margin: 0 auto 38px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin-bottom: 9px;
+      color: var(--blue);
+      font-size: 0.75rem;
       font-weight: 850;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.095em;
       text-transform: uppercase;
-      border: 1px solid #f0d6a2;
-      border-radius: 999px;
-      background: #fff8e9;
-    }
-
-    .card {
-      overflow: hidden;
-      border: 1px solid rgba(193, 199, 208, 0.7);
-      border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.97);
-      box-shadow: var(--shadow);
-    }
-
-    .card-body {
-      padding: 24px;
-    }
-
-    .hero-card {
-      position: relative;
-      overflow: hidden;
-      color: white;
-      border: 0;
-      background:
-        radial-gradient(circle at 93% 15%, rgba(67, 182, 255, 0.37), transparent 15rem),
-        linear-gradient(135deg, #102a43 0%, #0e4f77 65%, #008d7f 145%);
-    }
-
-    .hero-card::before {
-      position: absolute;
-      top: -88px;
-      right: -92px;
-      width: 260px;
-      height: 260px;
-      content: "";
-      border: 44px solid rgba(255, 255, 255, 0.08);
-      border-radius: 999px;
-    }
-
-    .hero-card .card-body {
-      position: relative;
-      z-index: 1;
-      padding: 34px 30px;
     }
 
     h1,
@@ -210,116 +236,49 @@
     }
 
     h1 {
-      max-width: 630px;
-      margin-bottom: 12px;
-      font-size: clamp(2rem, 4vw, 3rem);
-      line-height: 1.06;
-      letter-spacing: -0.05em;
+      margin-bottom: 20px;
+      font-size: clamp(2.5rem, 6vw, 4.6rem);
+      line-height: 1.03;
+      letter-spacing: -0.06em;
     }
 
     h2 {
-      margin-bottom: 7px;
-      font-size: 1.26rem;
-      letter-spacing: -0.025em;
+      margin-bottom: 13px;
+      color: var(--navy);
+      font-size: clamp(1.85rem, 3.4vw, 2.7rem);
+      line-height: 1.12;
+      letter-spacing: -0.045em;
     }
 
     h3 {
-      margin-bottom: 7px;
-      font-size: 1rem;
-      letter-spacing: -0.012em;
-    }
-
-    .hero-card p {
-      max-width: 630px;
-      margin-bottom: 0;
-      color: rgba(255, 255, 255, 0.82);
-      line-height: 1.55;
-    }
-
-    .eyebrow {
       margin-bottom: 8px;
-      color: var(--blue);
-      font-size: 0.75rem;
-      font-weight: 850;
-      letter-spacing: 0.095em;
-      text-transform: uppercase;
+      color: var(--navy);
+      font-size: 1.08rem;
+      letter-spacing: -0.02em;
+    }
+
+    .lead {
+      color: var(--slate-600);
+      font-size: 1.05rem;
+      line-height: 1.65;
     }
 
     .muted {
       color: var(--slate-600);
-      line-height: 1.55;
+      line-height: 1.58;
     }
 
     .small {
       color: var(--slate-600);
       font-size: 0.82rem;
-      line-height: 1.48;
+      line-height: 1.5;
     }
 
-    .section {
-      margin-top: 16px;
-    }
-
-    .section-title {
+    .button-row {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin: 26px 2px 10px;
-    }
-
-    .section-title h2 {
-      margin: 0;
-      font-size: 1.1rem;
-    }
-
-    .section-title span {
-      color: var(--slate-600);
-      font-size: 0.82rem;
-    }
-
-    .field {
-      margin-top: 18px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: var(--slate-700);
-      font-size: 0.88rem;
-      font-weight: 760;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 12px 13px;
-      color: var(--slate-900);
-      font-size: 0.94rem;
-      font-weight: 600;
-      outline: none;
-      border: 1px solid var(--slate-300);
-      border-radius: 11px;
-      background: white;
-      transition: border-color 150ms ease, box-shadow 150ms ease;
-    }
-
-    textarea {
-      min-height: 86px;
-      resize: vertical;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.12);
-    }
-
-    input::placeholder {
-      color: #a5adba;
-      font-weight: 500;
+      flex-wrap: wrap;
+      gap: 11px;
+      margin-top: 27px;
     }
 
     .button {
@@ -327,2987 +286,1824 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      min-height: 42px;
-      padding: 10px 14px;
+      min-height: 47px;
+      padding: 12px 17px;
+      font-size: 0.92rem;
+      font-weight: 820;
       border: 0;
-      border-radius: 11px;
-      font-size: 0.9rem;
-      font-weight: 800;
-      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+      border-radius: 12px;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
     }
 
-    .button:hover:not(:disabled) {
+    .button:hover {
       transform: translateY(-1px);
     }
 
     .button-primary {
-      color: white;
+      color: var(--white);
       background: linear-gradient(135deg, #176fc0, #0960b1);
-      box-shadow: 0 9px 17px rgba(25, 118, 210, 0.2);
+      box-shadow: 0 10px 19px rgba(25, 118, 210, 0.22);
     }
 
-    .button-success {
-      color: white;
-      background: linear-gradient(135deg, #11854c, #08733d);
-      box-shadow: 0 9px 17px rgba(20, 128, 74, 0.18);
+    .button-teal {
+      color: var(--white);
+      background: linear-gradient(135deg, #098f7d, #057468);
+      box-shadow: 0 10px 19px rgba(7, 136, 120, 0.20);
     }
 
     .button-secondary {
       color: var(--navy);
       border: 1px solid var(--slate-300);
-      background: white;
+      background: var(--white);
     }
 
-    .button-danger {
-      color: var(--red);
-      border: 1px solid #efc2bf;
-      background: #fff6f5;
+    .button-secondary:hover {
+      border-color: #98bce0;
+      background: #f7fbff;
     }
 
-    .button-text {
-      min-height: 34px;
-      padding: 5px 8px;
-      color: var(--blue);
-      background: transparent;
-    }
-
-    .button-small {
-      min-height: 35px;
-      padding: 7px 10px;
-      font-size: 0.8rem;
-    }
-
-    .status-message {
-      display: none;
-      margin-top: 14px;
-      padding: 12px 13px;
-      font-size: 0.88rem;
-      line-height: 1.45;
-      border-radius: 10px;
-    }
-
-    .status-message.visible {
-      display: block;
-    }
-
-    .status-message.error {
-      color: var(--red);
-      border: 1px solid #f1c3c0;
-      background: var(--red-soft);
-    }
-
-    .status-message.success {
-      color: var(--green);
-      border: 1px solid #bde3cc;
-      background: var(--green-soft);
-    }
-
-    .status-message.info {
-      color: #155a96;
-      border: 1px solid #bddaf7;
-      background: var(--blue-soft);
-    }
-
-    .notice {
-      display: flex;
-      gap: 10px;
-      margin-top: 16px;
-      padding: 13px 14px;
-      color: #5d4918;
-      font-size: 0.84rem;
-      line-height: 1.48;
-      border: 1px solid #f1dcae;
-      border-radius: var(--radius-sm);
-      background: #fffaed;
-    }
-
-    .notice-icon {
-      flex: 0 0 auto;
-      font-size: 1.05rem;
-    }
-
-    .select-card {
-      width: min(100%, 620px);
-      margin: 16px auto 0;
-    }
-
-    .button-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 22px;
-    }
-
-    .button-row .button-primary {
-      flex: 1;
-    }
-
-    .dashboard-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 22px 24px;
-      color: white;
+    .card {
+      border: 1px solid rgba(193, 199, 208, 0.68);
       border-radius: var(--radius-xl);
-      background:
-        radial-gradient(circle at 100% 0%, rgba(68, 182, 255, 0.25), transparent 16rem),
-        linear-gradient(135deg, #102a43, #0d5975 68%, #087a6f);
+      background: rgba(255, 255, 255, 0.96);
       box-shadow: var(--shadow);
     }
 
-    .dashboard-provider {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      min-width: 0;
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 80px 0 68px;
     }
 
-    .provider-avatar {
+    .hero::before {
+      position: absolute;
+      top: 36px;
+      right: -100px;
+      width: 510px;
+      height: 510px;
+      content: "";
+      border: 72px solid rgba(7, 136, 120, 0.07);
+      border-radius: 999px;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
       display: grid;
-      flex: 0 0 auto;
-      width: 54px;
-      height: 54px;
-      place-items: center;
-      color: white;
-      font-size: 1.05rem;
-      font-weight: 850;
-      border: 1px solid rgba(255, 255, 255, 0.19);
-      border-radius: 17px;
-      background: rgba(255, 255, 255, 0.16);
+      grid-template-columns: minmax(0, 1.05fr) minmax(390px, 0.95fr);
+      gap: 52px;
+      align-items: center;
     }
 
-    .provider-title {
-      min-width: 0;
+    .hero-copy {
+      max-width: 680px;
     }
 
-    .provider-title h1 {
-      margin-bottom: 4px;
-      font-size: clamp(1.4rem, 3vw, 2rem);
+    .hero-copy h1 span {
+      color: var(--teal);
     }
 
-    .provider-title p {
-      margin-bottom: 0;
-      overflow-wrap: anywhere;
-      color: rgba(255, 255, 255, 0.76);
-      font-size: 0.9rem;
+    .hero-copy .lead {
+      max-width: 640px;
     }
 
-    .dashboard-actions {
+    .hero-trust-row {
       display: flex;
       flex-wrap: wrap;
-      justify-content: flex-end;
+      gap: 9px;
+      margin-top: 23px;
+    }
+
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 10px;
+      color: var(--slate-700);
+      font-size: 0.77rem;
+      font-weight: 740;
+      border: 1px solid #d7e4ed;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.73);
+    }
+
+    .trust-pill .check {
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 455px;
+    }
+
+    .hero-panel {
+      position: absolute;
+      inset: 24px 0 0 30px;
+      overflow: hidden;
+      border: 1px solid rgba(193, 225, 235, 0.9);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 100% 5%, rgba(80, 204, 182, 0.26), transparent 15rem),
+        linear-gradient(145deg, #0e3c59, #0a6d70);
+      box-shadow: 0 22px 50px rgba(16, 42, 67, 0.20);
+    }
+
+    .hero-panel::after {
+      position: absolute;
+      right: -48px;
+      bottom: -80px;
+      width: 250px;
+      height: 250px;
+      content: "";
+      border: 38px solid rgba(255, 255, 255, 0.10);
+      border-radius: 999px;
+    }
+
+    .visual-app-header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 25px 25px 0;
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .visual-dot-row {
+      display: flex;
+      gap: 5px;
+    }
+
+    .visual-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .visual-main-card {
+      position: relative;
+      z-index: 1;
+      margin: 24px 22px;
+      padding: 21px;
+      border: 1px solid rgba(255, 255, 255, 0.17);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(7px);
+    }
+
+    .visual-welcome {
+      margin-bottom: 5px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.76rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .visual-title {
+      margin-bottom: 16px;
+      color: var(--white);
+      font-size: 1.55rem;
+      font-weight: 860;
+      letter-spacing: -0.035em;
+    }
+
+    .visual-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 9px;
     }
 
-    .dashboard-actions .button-secondary {
-      color: white;
-      border-color: rgba(255, 255, 255, 0.25);
-      background: rgba(255, 255, 255, 0.11);
+    .visual-metric {
+      padding: 13px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.13);
     }
 
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 16px;
+    .visual-metric-label {
+      margin-bottom: 5px;
+      color: rgba(255, 255, 255, 0.66);
+      font-size: 0.65rem;
+      font-weight: 780;
+      letter-spacing: 0.055em;
+      text-transform: uppercase;
     }
 
-    .kpi-card {
-      min-height: 140px;
-      padding: 18px;
-      border: 1px solid rgba(193, 199, 208, 0.7);
-      border-radius: var(--radius-lg);
-      background: rgba(255, 255, 255, 0.96);
-      box-shadow: 0 7px 23px rgba(16, 42, 67, 0.065);
+    .visual-metric-value {
+      color: var(--white);
+      font-size: 1.09rem;
+      font-weight: 860;
     }
 
-    .kpi-icon {
-      display: grid;
-      width: 34px;
-      height: 34px;
+    .visual-success-card {
+      position: absolute;
+      z-index: 3;
+      right: -10px;
+      bottom: 16px;
+      width: min(270px, 76%);
+      padding: 16px;
+      border: 1px solid #bde5ce;
+      border-radius: 16px;
+      background: rgba(248, 255, 251, 0.98);
+      box-shadow: 0 17px 35px rgba(5, 49, 57, 0.25);
+    }
+
+    .visual-success-icon {
+      display: inline-grid;
+      width: 29px;
+      height: 29px;
+      margin-bottom: 8px;
       place-items: center;
-      margin-bottom: 14px;
-      font-size: 1rem;
-      border-radius: 10px;
+      color: var(--green);
+      font-size: 0.88rem;
+      font-weight: 900;
+      border-radius: 9px;
+      background: var(--green-soft);
     }
 
-    .kpi-card:nth-child(1) .kpi-icon {
-      color: var(--blue);
+    .visual-success-card strong {
+      display: block;
+      color: var(--navy);
+      font-size: 0.92rem;
+    }
+
+    .visual-success-card span {
+      display: block;
+      margin-top: 3px;
+      color: var(--slate-600);
+      font-size: 0.75rem;
+      line-height: 1.38;
+    }
+
+    .visual-reward {
+      position: absolute;
+      z-index: 2;
+      bottom: -17px;
+      left: -3px;
+      padding: 13px 16px;
+      color: var(--white);
+      font-size: 0.83rem;
+      font-weight: 850;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #1a8552, #0b6b40);
+      box-shadow: 0 12px 24px rgba(4, 89, 49, 0.26);
+    }
+
+    .soft-section {
+      background:
+        linear-gradient(180deg, rgba(232, 242, 255, 0.58), rgba(255, 255, 255, 0));
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .step-card {
+      padding: 24px;
+      border: 1px solid rgba(193, 199, 208, 0.68);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 7px 23px rgba(16, 42, 67, 0.06);
+    }
+
+    .step-number {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      margin-bottom: 17px;
+      place-items: center;
+      color: var(--blue-dark);
+      font-size: 0.86rem;
+      font-weight: 900;
+      border-radius: 11px;
       background: var(--blue-soft);
     }
 
-    .kpi-card:nth-child(2) .kpi-icon {
-      color: var(--teal);
+    .step-card:nth-child(2) .step-number {
+      color: var(--teal-dark);
       background: var(--teal-soft);
     }
 
-    .kpi-card:nth-child(3) .kpi-icon {
-      color: var(--purple);
-      background: var(--purple-soft);
-    }
-
-    .kpi-card:nth-child(4) .kpi-icon {
+    .step-card:nth-child(3) .step-number {
       color: var(--green);
       background: var(--green-soft);
     }
 
-    .kpi-label {
-      margin-bottom: 6px;
-      color: var(--slate-600);
-      font-size: 0.76rem;
-      font-weight: 760;
-      letter-spacing: 0.045em;
-      text-transform: uppercase;
-    }
-
-    .kpi-value {
-      color: var(--navy);
-      font-size: clamp(1.35rem, 2.4vw, 1.9rem);
-      font-weight: 900;
-      letter-spacing: -0.04em;
-    }
-
-    .kpi-footnote {
-      margin-top: 6px;
-      color: var(--slate-500);
-      font-size: 0.74rem;
-      line-height: 1.35;
-    }
-
-    .workspace-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.75fr) minmax(280px, 0.75fr);
-      gap: 16px;
-      margin-top: 16px;
-    }
-
-    .roster-card {
-      overflow: hidden;
-    }
-
-    .roster-card-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 21px 22px 15px;
-      border-bottom: 1px solid var(--slate-200);
-    }
-
-    .roster-card-header h2 {
-      margin-bottom: 4px;
-    }
-
-    .roster-card-header p {
+    .step-card p {
       margin-bottom: 0;
       color: var(--slate-600);
-      font-size: 0.86rem;
+      font-size: 0.9rem;
+      line-height: 1.58;
     }
 
-    .roster-controls {
+    .outcomes-grid {
       display: grid;
-      grid-template-columns: minmax(190px, 1.6fr) minmax(145px, 0.75fr) minmax(145px, 0.75fr);
-      gap: 9px;
-      padding: 15px 22px;
-      border-bottom: 1px solid var(--slate-200);
-      background: #fbfcfd;
-    }
-
-    .input-with-icon {
-      position: relative;
-    }
-
-    .input-with-icon span {
-      position: absolute;
-      top: 50%;
-      left: 12px;
-      color: var(--slate-500);
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-
-    .input-with-icon input {
-      padding-left: 38px;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      min-width: 850px;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 14px 13px;
-      text-align: left;
-      border-bottom: 1px solid var(--slate-200);
-    }
-
-    th {
-      color: var(--slate-600);
-      font-size: 0.72rem;
-      font-weight: 850;
-      letter-spacing: 0.045em;
-      text-transform: uppercase;
-      background: #fcfdfe;
-    }
-
-    th.sortable {
-      cursor: pointer;
-      user-select: none;
-    }
-
-    th.sortable:hover {
-      color: var(--blue);
-    }
-
-    td {
-      color: var(--slate-700);
-      font-size: 0.86rem;
-      vertical-align: middle;
-    }
-
-    tbody tr {
-      cursor: pointer;
-      transition: background 130ms ease;
-    }
-
-    tbody tr:hover {
-      background: #f3f9fd;
-    }
-
-    tbody tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .patient-cell {
-      display: flex;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 42px;
       align-items: center;
-      gap: 10px;
-      min-width: 165px;
     }
 
-    .patient-initial {
+    .outcomes-visual {
+      position: relative;
+      min-height: 370px;
+      overflow: hidden;
+      border-radius: 25px;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(120, 229, 207, 0.35), transparent 13rem),
+        linear-gradient(145deg, #0b5870, #0c7c70);
+      box-shadow: 0 20px 47px rgba(16, 42, 67, 0.17);
+    }
+
+    .outcomes-visual::after {
+      position: absolute;
+      right: -48px;
+      bottom: -48px;
+      width: 230px;
+      height: 230px;
+      content: "";
+      border: 38px solid rgba(255, 255, 255, 0.09);
+      border-radius: 50%;
+    }
+
+    .outcome-chart-card {
+      position: absolute;
+      top: 35px;
+      right: 27px;
+      left: 27px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(7px);
+    }
+
+    .outcome-chart-title {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.76rem;
+      font-weight: 760;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .chart-bars {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      height: 151px;
+      margin-top: 14px;
+      padding: 0 4px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+    }
+
+    .bar-group {
       display: grid;
-      flex: 0 0 auto;
-      width: 33px;
-      height: 33px;
-      place-items: center;
-      color: var(--blue-dark);
-      font-size: 0.77rem;
-      font-weight: 850;
-      border-radius: 10px;
-      background: var(--blue-soft);
+      justify-items: center;
+      gap: 7px;
     }
 
-    .patient-name {
-      color: var(--navy);
-      font-weight: 830;
+    .bar {
+      width: 22px;
+      border-radius: 7px 7px 2px 2px;
+      background: linear-gradient(180deg, #8af1d5, #25b89a);
     }
 
-    .patient-subline {
-      margin-top: 2px;
-      color: var(--slate-500);
+    .bar-label {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.64rem;
+    }
+
+    .outcomes-stat {
+      position: absolute;
+      z-index: 2;
+      bottom: 29px;
+      left: 27px;
+      padding: 15px 17px;
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      background: rgba(7, 54, 65, 0.30);
+    }
+
+    .outcomes-stat strong {
+      display: block;
+      font-size: 1.5rem;
+      letter-spacing: -0.045em;
+    }
+
+    .outcomes-stat span {
+      display: block;
+      margin-top: 3px;
+      color: rgba(255, 255, 255, 0.75);
       font-size: 0.73rem;
     }
 
-    .reading-main {
-      color: var(--slate-800);
-      font-weight: 760;
-    }
-
-    .reading-sub {
-      margin-top: 2px;
-      color: var(--slate-500);
-      font-size: 0.72rem;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      max-width: 150px;
-      padding: 6px 8px;
-      font-size: 0.69rem;
-      font-weight: 850;
-      line-height: 1.2;
-      letter-spacing: 0.015em;
-      text-align: center;
-      white-space: normal;
-      border-radius: 999px;
-    }
-
-    .pill-neutral {
-      color: var(--slate-600);
-      background: var(--slate-100);
-    }
-
-    .pill-success {
-      color: var(--green);
-      background: #d9f5e4;
-    }
-
-    .pill-warning {
-      color: var(--amber);
-      background: #ffefd1;
-    }
-
-    .pill-danger {
-      color: var(--red);
-      background: #ffdfdd;
-    }
-
-    .pill-info {
-      color: var(--blue-dark);
-      background: var(--blue-soft);
-    }
-
-    .pill-purple {
-      color: var(--purple);
-      background: var(--purple-soft);
-    }
-
-    .insights-card {
-      padding: 21px;
-    }
-
-    .insights-card h2 {
-      margin-bottom: 4px;
-    }
-
-    .insights-card > p {
-      margin-bottom: 17px;
-      color: var(--slate-600);
-      font-size: 0.86rem;
-      line-height: 1.5;
-    }
-
-    .activity-stat-grid {
+    .feature-list {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 18px;
+      gap: 15px;
+      margin-top: 26px;
     }
 
-    .activity-stat {
-      padding: 13px;
-      border: 1px solid var(--slate-200);
-      border-radius: 12px;
-      background: #fbfcfd;
-    }
-
-    .activity-stat-value {
-      color: var(--navy);
-      font-size: 1.3rem;
-      font-weight: 900;
-      letter-spacing: -0.035em;
-    }
-
-    .activity-stat-label {
-      margin-top: 3px;
-      color: var(--slate-600);
-      font-size: 0.74rem;
-      line-height: 1.32;
-    }
-
-    .activity-list {
-      overflow: hidden;
-      border: 1px solid var(--slate-200);
-      border-radius: 13px;
-    }
-
-    .activity-row {
-      padding: 13px;
-      border-bottom: 1px solid var(--slate-200);
-    }
-
-    .activity-row:last-child {
-      border-bottom: 0;
-    }
-
-    .activity-row-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .activity-patient {
-      overflow: hidden;
-      color: var(--navy);
-      font-size: 0.84rem;
-      font-weight: 800;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .activity-meta {
-      margin-top: 4px;
-      color: var(--slate-600);
-      font-size: 0.75rem;
-      line-height: 1.35;
-    }
-
-    .empty-state {
-      padding: 28px 20px;
-      color: var(--slate-600);
-      font-size: 0.88rem;
-      line-height: 1.5;
-      text-align: center;
-      border: 1px dashed var(--slate-300);
-      border-radius: var(--radius-md);
-      background: rgba(255, 255, 255, 0.55);
-    }
-
-    .table-empty {
-      padding: 28px 20px;
-      color: var(--slate-600);
-      font-size: 0.88rem;
-      text-align: center;
-    }
-
-    .drawer-backdrop {
-      position: fixed;
-      z-index: 100;
-      inset: 0;
-      display: none;
-      background: rgba(8, 28, 44, 0.36);
-      backdrop-filter: blur(2px);
-    }
-
-    .drawer-backdrop.open {
-      display: block;
-    }
-
-    .drawer {
-      position: fixed;
-      z-index: 101;
-      top: 0;
-      right: 0;
-      width: min(100%, 640px);
-      height: 100vh;
-      overflow-y: auto;
-      background: #f7fafc;
-      box-shadow: var(--shadow-lg);
-      transform: translateX(104%);
-      transition: transform 240ms ease;
-    }
-
-    .drawer.open {
-      transform: translateX(0);
-    }
-
-    .drawer-header {
-      position: sticky;
-      z-index: 4;
-      top: 0;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 20px 22px;
-      color: white;
-      background:
-        radial-gradient(circle at 100% 0%, rgba(77, 192, 253, 0.25), transparent 12rem),
-        linear-gradient(135deg, #102a43, #0e5877);
-    }
-
-    .drawer-header h2 {
-      margin: 0 0 4px;
-      color: white;
-    }
-
-    .drawer-header p {
-      margin: 0;
-      color: rgba(255, 255, 255, 0.75);
-      font-size: 0.84rem;
-      line-height: 1.45;
-    }
-
-    .drawer-close {
+    .feature-item {
       display: grid;
-      flex: 0 0 auto;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+
+    .feature-icon {
+      display: grid;
       width: 36px;
       height: 36px;
       place-items: center;
-      color: white;
-      font-size: 1.25rem;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.1);
+      color: var(--blue-dark);
+      font-size: 1rem;
+      border-radius: 11px;
+      background: var(--blue-soft);
     }
 
-    .drawer-body {
-      padding: 20px;
+    .feature-item:nth-child(2) .feature-icon {
+      color: var(--teal-dark);
+      background: var(--teal-soft);
     }
 
-    .drawer-summary {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-bottom: 16px;
+    .feature-item:nth-child(3) .feature-icon {
+      color: var(--green);
+      background: var(--green-soft);
     }
 
-    .drawer-summary-card {
-      padding: 12px;
-      border: 1px solid #dce7ef;
-      border-radius: 13px;
-      background: white;
+    .feature-item h3 {
+      margin-bottom: 4px;
+      font-size: 0.98rem;
     }
 
-    .drawer-summary-label {
-      margin-bottom: 5px;
+    .feature-item p {
+      margin-bottom: 0;
       color: var(--slate-600);
-      font-size: 0.68rem;
-      font-weight: 820;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+      font-size: 0.87rem;
+      line-height: 1.5;
     }
 
-    .drawer-summary-value {
-      overflow-wrap: anywhere;
-      color: var(--navy);
-      font-size: 0.91rem;
+    .portal-section {
+      position: relative;
+      overflow: hidden;
+      padding: 86px 0;
+      background:
+        radial-gradient(circle at 4% 20%, rgba(38, 132, 255, 0.13), transparent 21rem),
+        linear-gradient(145deg, #eff8fc, #f6fbfc);
+    }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .portal-card {
+      position: relative;
+      overflow: hidden;
+      padding: 30px;
+      border: 1px solid #cfe0eb;
+      border-radius: var(--radius-xl);
+      background: var(--white);
+      box-shadow: 0 12px 30px rgba(16, 42, 67, 0.08);
+    }
+
+    .portal-card::after {
+      position: absolute;
+      right: -53px;
+      bottom: -63px;
+      width: 180px;
+      height: 180px;
+      content: "";
+      border: 30px solid rgba(25, 118, 210, 0.06);
+      border-radius: 50%;
+    }
+
+    .portal-card.patient-card::after {
+      border-color: rgba(7, 136, 120, 0.08);
+    }
+
+    .portal-card-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .portal-icon {
+      display: grid;
+      width: 51px;
+      height: 51px;
+      margin-bottom: 19px;
+      place-items: center;
+      color: var(--blue-dark);
+      font-size: 1.38rem;
+      border-radius: 16px;
+      background: var(--blue-soft);
+    }
+
+    .patient-card .portal-icon {
+      color: var(--teal-dark);
+      background: var(--teal-soft);
+    }
+
+    .protected-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      padding: 6px 9px;
+      color: var(--amber);
+      font-size: 0.71rem;
       font-weight: 850;
+      letter-spacing: 0.035em;
+      text-transform: uppercase;
+      border: 1px solid #f0d6a2;
+      border-radius: 999px;
+      background: #fff9eb;
     }
 
-    .drawer-section {
-      margin-top: 16px;
-      padding: 17px;
-      border: 1px solid var(--slate-200);
+    .protected-badge span {
+      font-size: 0.88rem;
+    }
+
+    .portal-card h3 {
+      margin-bottom: 9px;
+      font-size: 1.38rem;
+    }
+
+    .portal-card p {
+      max-width: 480px;
+      margin-bottom: 0;
+      color: var(--slate-600);
+      line-height: 1.58;
+    }
+
+    .portal-card .button-row {
+      margin-top: 22px;
+    }
+
+    .portal-card .button {
+      min-height: 43px;
+      font-size: 0.86rem;
+    }
+
+    .faq-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+      gap: 43px;
+      align-items: start;
+    }
+
+    .faq-side-card {
+      padding: 25px;
+      border: 1px solid #d6e6ef;
       border-radius: var(--radius-lg);
-      background: white;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(56, 177, 235, 0.13), transparent 10rem),
+        #f9fcfe;
     }
 
-    .drawer-section-head {
+    .faq-side-icon {
+      display: grid;
+      width: 45px;
+      height: 45px;
+      margin-bottom: 16px;
+      place-items: center;
+      color: var(--blue-dark);
+      font-size: 1.25rem;
+      border-radius: 14px;
+      background: var(--blue-soft);
+    }
+
+    .faq-side-card h3 {
+      font-size: 1.15rem;
+    }
+
+    .faq-side-card p {
+      margin-bottom: 0;
+      color: var(--slate-600);
+      font-size: 0.9rem;
+      line-height: 1.56;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .faq-item {
+      overflow: hidden;
+      border: 1px solid var(--slate-200);
+      border-radius: 13px;
+      background: var(--white);
+    }
+
+    .faq-item summary {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 13px;
+      gap: 14px;
+      padding: 16px 17px;
+      color: var(--navy);
+      font-size: 0.92rem;
+      font-weight: 790;
+      cursor: pointer;
+      list-style: none;
     }
 
-    .drawer-section-head h3 {
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary::after {
+      flex: 0 0 auto;
+      content: "+";
+      color: var(--blue);
+      font-size: 1.18rem;
+      font-weight: 500;
+    }
+
+    .faq-item[open] summary::after {
+      content: "−";
+    }
+
+    .faq-answer {
+      padding: 0 17px 17px;
+      color: var(--slate-600);
+      font-size: 0.89rem;
+      line-height: 1.58;
+    }
+
+    .faq-answer p {
       margin: 0;
     }
 
-    .drawer-section-head p {
-      margin: 3px 0 0;
-      color: var(--slate-600);
-      font-size: 0.78rem;
-      line-height: 1.4;
+    .pricing-section {
+      position: relative;
+      overflow: hidden;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 90% 10%, rgba(66, 200, 177, 0.31), transparent 16rem),
+        linear-gradient(135deg, #0b3149, #0b6470 68%, #087c6d);
     }
 
-    .details-grid {
+    .pricing-section::before {
+      position: absolute;
+      top: -112px;
+      left: -100px;
+      width: 330px;
+      height: 330px;
+      content: "";
+      border: 55px solid rgba(255, 255, 255, 0.06);
+      border-radius: 50%;
+    }
+
+    .pricing-content {
+      position: relative;
+      z-index: 1;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(270px, 0.62fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .pricing-section .eyebrow {
+      color: #aee7ff;
+    }
+
+    .pricing-section h2 {
+      color: var(--white);
+    }
+
+    .pricing-section .lead {
+      max-width: 650px;
+      color: rgba(255, 255, 255, 0.79);
+    }
+
+    .pricing-section .button-secondary {
+      color: var(--navy);
+      border-color: var(--white);
+      background: var(--white);
+    }
+
+    .pricing-callout {
+      padding: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.19);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+    }
+
+    .pricing-callout-label {
+      margin-bottom: 8px;
+      color: rgba(255, 255, 255, 0.66);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .pricing-callout strong {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 1.62rem;
+      letter-spacing: -0.04em;
+    }
+
+    .pricing-callout p {
+      margin-bottom: 0;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.88rem;
+      line-height: 1.53;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.76fr) minmax(0, 1.24fr);
+      gap: 34px;
+      align-items: start;
+    }
+
+    .contact-details {
+      padding: 27px;
+      border: 1px solid #d7e6ee;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at 100% 0%, rgba(45, 187, 157, 0.14), transparent 12rem),
+        #f9fcfd;
+    }
+
+    .contact-details h2 {
+      font-size: 1.85rem;
+    }
+
+    .contact-methods {
+      display: grid;
       gap: 12px;
+      margin-top: 24px;
     }
 
-    .detail-item {
-      padding: 11px;
+    .contact-method {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 11px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid #dbe8ef;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .contact-method-icon {
+      display: grid;
+      width: 35px;
+      height: 35px;
+      place-items: center;
+      color: var(--teal-dark);
+      font-size: 1rem;
       border-radius: 10px;
-      background: #f8fafc;
+      background: var(--teal-soft);
     }
 
-    .detail-label {
-      margin-bottom: 4px;
+    .contact-method-label {
+      margin-bottom: 2px;
       color: var(--slate-600);
       font-size: 0.7rem;
       font-weight: 800;
-      letter-spacing: 0.035em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
     }
 
-    .detail-value {
+    .contact-method-value {
       overflow-wrap: anywhere;
-      color: var(--slate-800);
-      font-size: 0.87rem;
-      font-weight: 750;
-      line-height: 1.35;
-    }
-
-    .workflow-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .workflow-status-display {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 13px;
-      padding: 11px;
-      border: 1px solid var(--slate-200);
-      border-radius: 11px;
-      background: #fafcfd;
-    }
-
-    .timeline {
-      overflow: hidden;
-      border: 1px solid var(--slate-200);
-      border-radius: 12px;
-    }
-
-    .timeline-item {
-      padding: 14px;
-      border-bottom: 1px solid var(--slate-200);
-    }
-
-    .timeline-item:last-child {
-      border-bottom: 0;
-    }
-
-    .timeline-main {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .timeline-reading {
       color: var(--navy);
+      font-size: 0.88rem;
+      font-weight: 770;
+    }
+
+    .contact-method-value:hover {
+      color: var(--blue);
+    }
+
+    .contact-form-card {
+      padding: 28px;
+    }
+
+    .contact-form-card h2 {
+      margin-bottom: 7px;
+      font-size: 1.82rem;
+    }
+
+    .contact-form-card > p {
+      margin-bottom: 21px;
+      color: var(--slate-600);
       font-size: 0.91rem;
-      font-weight: 850;
-    }
-
-    .timeline-meta {
-      margin-top: 4px;
-      color: var(--slate-600);
-      font-size: 0.75rem;
-      line-height: 1.4;
-    }
-
-    details {
-      margin-top: 10px;
-      border: 1px solid var(--slate-200);
-      border-radius: 9px;
-      background: #fbfcfd;
-    }
-
-    summary {
-      padding: 9px 10px;
-      color: var(--blue-dark);
-      font-size: 0.79rem;
-      font-weight: 780;
-      cursor: pointer;
-    }
-
-    details p {
-      margin: 0;
-      padding: 0 10px 10px;
-      color: var(--slate-600);
-      font-size: 0.8rem;
-      line-height: 1.5;
-      white-space: pre-wrap;
-    }
-
-    .wallet-summary {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-      padding: 13px;
-      color: white;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #12435d, #0a7469);
-    }
-
-    .wallet-summary span {
-      color: rgba(255, 255, 255, 0.72);
-      font-size: 0.77rem;
-      font-weight: 750;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .wallet-summary strong {
-      font-size: 1.25rem;
-      letter-spacing: -0.03em;
-    }
-
-    .wallet-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 11px 0;
-      border-bottom: 1px solid var(--slate-200);
-    }
-
-    .wallet-row:last-child {
-      border-bottom: 0;
-    }
-
-    .wallet-amount {
-      color: var(--green);
-      font-size: 0.91rem;
-      font-weight: 870;
-    }
-
-    .wallet-meta {
-      margin-top: 3px;
-      color: var(--slate-600);
-      font-size: 0.74rem;
-    }
-
-    .drawer-footer-note {
-      margin-top: 14px;
-      color: var(--slate-500);
-      font-size: 0.73rem;
-      line-height: 1.45;
+      line-height: 1.55;
     }
 
     .form-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0 12px;
+      gap: 0 13px;
     }
 
-    .form-grid .field.full {
+    .form-group {
+      margin-top: 15px;
+    }
+
+    .form-group.full {
       grid-column: 1 / -1;
     }
 
-    .footer-note {
-      margin: 24px 8px 0;
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--slate-700);
+      font-size: 0.84rem;
+      font-weight: 770;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px 13px;
+      color: var(--slate-900);
+      font-size: 0.91rem;
+      outline: none;
+      border: 1px solid var(--slate-300);
+      border-radius: 11px;
+      background: var(--white);
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    textarea {
+      min-height: 132px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.12);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #a7b0bc;
+    }
+
+    .form-note {
+      margin: 12px 0 0;
       color: var(--slate-500);
       font-size: 0.74rem;
-      line-height: 1.5;
-      text-align: center;
+      line-height: 1.48;
     }
 
-    @media (max-width: 1150px) {
-      .kpi-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    .form-status {
+      display: none;
+      margin-top: 14px;
+      padding: 11px 12px;
+      font-size: 0.84rem;
+      line-height: 1.43;
+      border-radius: 10px;
+    }
+
+    .form-status.visible {
+      display: block;
+    }
+
+    .form-status.success {
+      color: var(--green);
+      border: 1px solid #bde3cc;
+      background: var(--green-soft);
+    }
+
+    .form-status.error {
+      color: var(--red);
+      border: 1px solid #f1c3c0;
+      background: var(--red-soft);
+    }
+
+    .site-footer {
+      padding: 31px 0;
+      color: rgba(255, 255, 255, 0.72);
+      background: var(--navy-deep);
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--white);
+      font-size: 0.92rem;
+      font-weight: 830;
+    }
+
+    .footer-mark {
+      display: grid;
+      width: 31px;
+      height: 31px;
+      place-items: center;
+      color: var(--white);
+      font-size: 0.85rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1266b0, #00a58b);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.73);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+    }
+
+    .footer-note {
+      flex-basis: 100%;
+      margin: 3px 0 0;
+      color: rgba(255, 255, 255, 0.48);
+      font-size: 0.71rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(335px, 0.85fr);
+        gap: 31px;
       }
 
-      .workspace-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .insights-card {
-        min-height: 0;
+      .outcomes-grid,
+      .faq-layout,
+      .contact-layout {
+        gap: 27px;
       }
     }
 
-    @media (max-width: 760px) {
-      .app-shell {
-        padding: 16px 12px 30px;
-      }
-
-      .topbar {
-        margin-bottom: 17px;
-      }
-
-      .prototype-badge {
+    @media (max-width: 860px) {
+      .desktop-nav {
         display: none;
       }
 
-      .dashboard-header {
-        flex-direction: column;
-        padding: 20px;
+      .mobile-menu-button {
+        display: grid;
+        place-items: center;
       }
 
-      .dashboard-actions {
-        justify-content: flex-start;
+      .hero {
+        padding: 59px 0 46px;
       }
 
-      .roster-card-header {
-        flex-direction: column;
-      }
-
-      .roster-controls {
+      .hero-grid,
+      .outcomes-grid,
+      .faq-layout,
+      .pricing-content,
+      .contact-layout {
         grid-template-columns: 1fr;
       }
 
-      .drawer-summary {
+      .hero-copy {
+        max-width: none;
+      }
+
+      .hero-visual {
+        width: min(100%, 560px);
+        min-height: 410px;
+        margin: 3px auto 0;
+      }
+
+      .outcomes-visual {
+        width: min(100%, 580px);
+        margin: 0 auto;
+      }
+
+      .section {
+        padding: 68px 0;
+      }
+
+      .faq-side-card {
+        max-width: 560px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .site-shell {
+        padding: 0 14px;
+      }
+
+      .nav-bar {
+        min-height: 65px;
+      }
+
+      .brand {
+        font-size: 0.92rem;
+      }
+
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+      }
+
+      h1 {
+        font-size: clamp(2.35rem, 12vw, 3.45rem);
+      }
+
+      .hero-visual {
+        min-height: 376px;
+      }
+
+      .hero-panel {
+        inset: 13px 7px 0 7px;
+      }
+
+      .visual-success-card {
+        right: 9px;
+      }
+
+      .visual-reward {
+        left: 9px;
+      }
+
+      .steps-grid,
+      .portal-grid {
         grid-template-columns: 1fr;
       }
 
-      .details-grid,
+      .section {
+        padding: 54px 0;
+      }
+
+      .section-heading {
+        margin-bottom: 28px;
+      }
+
+      .portal-card,
+      .contact-details,
+      .contact-form-card {
+        padding: 23px;
+      }
+
       .form-grid {
         grid-template-columns: 1fr;
       }
 
-      .form-grid .field.full {
+      .form-group.full {
         grid-column: auto;
       }
 
-      .drawer {
-        width: 100%;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .kpi-grid {
-        grid-template-columns: 1fr;
-      }
-
       .button-row {
-        flex-direction: column;
         align-items: stretch;
       }
 
-      .button-row .button {
+      .button {
         width: 100%;
       }
 
-      .dashboard-provider {
+      .footer-grid {
         align-items: flex-start;
+        flex-direction: column;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="app-shell">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-mark">♥</div>
-        <span>RPM Rewards</span>
-      </div>
+  <header class="site-header">
+    <div class="site-shell">
+      <nav class="nav-bar" aria-label="Primary navigation">
+        <a class="brand" href="#home" aria-label="RPM Health Rewards home">
+          <span class="brand-mark">♥</span>
+          <span>RPM Health Rewards</span>
+        </a>
 
-      <div class="topbar-actions">
-        <span class="prototype-badge">Provider Prototype</span>
-      </div>
-    </header>
+        <div class="desktop-nav">
+          <a class="nav-link portal-link" href="providers.html">
+            <span class="key-icon" aria-hidden="true">🔑</span>
+            Provider Portal
+          </a>
 
-    <!-- ================================================================
-         SCREEN 1: PROVIDER SELECTION
-         ================================================================ -->
-    <section id="providerSelectScreen" class="screen active">
-      <article class="card hero-card">
-        <div class="card-body">
-          <div class="eyebrow" style="color: #aee7ff;">Remote Patient Monitoring</div>
-          <h1>Provider Portal</h1>
-          <p>
-            Select a provider workspace to review the connected RPM patient
-            roster, monitoring activity, rewards, and internal billing workflow.
-          </p>
+          <a class="nav-link portal-link" href="rpm.html">
+            <span class="key-icon" aria-hidden="true">🔑</span>
+            Patient Portal
+          </a>
+
+          <a class="nav-link" href="#faq">FAQ</a>
+          <a class="nav-link" href="#pricing">Pricing</a>
+          <a class="nav-cta" href="#contact">Contact Us</a>
         </div>
-      </article>
 
-      <article class="card select-card">
-        <div class="card-body">
-          <h2>Open provider workspace</h2>
-          <p class="muted">
-            This prototype scopes the dashboard to patients linked to the
-            selected provider record.
-          </p>
+        <button
+          id="mobileMenuButton"
+          class="mobile-menu-button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+          aria-label="Open navigation menu"
+        >
+          ☰
+        </button>
+      </nav>
 
-          <form id="providerSelectForm" novalidate>
-            <div class="field">
-              <label for="providerSelect">Provider / clinic</label>
-              <select id="providerSelect" required>
-                <option value="">Loading available providers…</option>
-              </select>
-            </div>
+      <div id="mobileNav" class="mobile-nav">
+        <a class="nav-link portal-link" href="providers.html">
+          <span class="key-icon" aria-hidden="true">🔑</span>
+          Provider Portal
+        </a>
 
-            <div id="providerSelectStatus" class="status-message" role="alert"></div>
+        <a class="nav-link portal-link" href="rpm.html">
+          <span class="key-icon" aria-hidden="true">🔑</span>
+          Patient Portal
+        </a>
+
+        <a class="nav-link" href="#faq">FAQ</a>
+        <a class="nav-link" href="#pricing">Pricing</a>
+        <a class="nav-link" href="#contact">Contact Us</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="site-shell">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow">Value-Based Remote Patient Monitoring</div>
+
+            <h1>
+              Better monitoring.<br />
+              Better <span>health rewards.</span>
+            </h1>
+
+            <p class="lead">
+              RPM Health Rewards helps providers support consistent remote
+              monitoring while giving patients a clear, motivating experience
+              for tracking progress toward personalized health goals.
+            </p>
 
             <div class="button-row">
-              <button id="providerContinueButton" class="button button-primary" type="submit">
-                Continue to Dashboard
-              </button>
-            </div>
-          </form>
+              <a class="button button-primary" href="#portals">
+                Explore Secure Portals
+                <span aria-hidden="true">→</span>
+              </a>
 
-          <div class="notice">
-            <span class="notice-icon">⚠</span>
-            <span>
-              <strong>Prototype only:</strong> this app connects directly to
-              Airtable from the browser. Use synthetic data and a restricted
-              prototype PAT only. Replace this architecture with authenticated,
-              server-side access before real-world use.
-            </span>
+              <a class="button button-secondary" href="#contact">
+                Talk With Our Team
+              </a>
+            </div>
+
+            <div class="hero-trust-row">
+              <span class="trust-pill">
+                <span class="check">✓</span>
+                RPM workflow visibility
+              </span>
+
+              <span class="trust-pill">
+                <span class="check">✓</span>
+                Patient-centered engagement
+              </span>
+
+              <span class="trust-pill">
+                <span class="check">✓</span>
+                Provider operational insight
+              </span>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Illustration of the RPM Health Rewards patient experience">
+            <div class="hero-panel">
+              <div class="visual-app-header">
+                <span>RPM Rewards</span>
+
+                <span class="visual-dot-row" aria-hidden="true">
+                  <span class="visual-dot"></span>
+                  <span class="visual-dot"></span>
+                  <span class="visual-dot"></span>
+                </span>
+              </div>
+
+              <div class="visual-main-card">
+                <div class="visual-welcome">Today’s monitoring plan</div>
+                <div class="visual-title">Blood Pressure Check</div>
+
+                <div class="visual-metrics">
+                  <div class="visual-metric">
+                    <div class="visual-metric-label">Current goal</div>
+                    <div class="visual-metric-value">130/80</div>
+                  </div>
+
+                  <div class="visual-metric">
+                    <div class="visual-metric-label">Submitted</div>
+                    <div class="visual-metric-value">124/76</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="visual-reward">★ $5.00 reward recorded</div>
+            </div>
+
+            <div class="visual-success-card">
+              <div class="visual-success-icon">✓</div>
+              <strong>Goal achieved</strong>
+              <span>Your reading meets today’s configured target.</span>
+            </div>
           </div>
         </div>
-      </article>
+      </div>
     </section>
 
-    <!-- ================================================================
-         SCREEN 2: PROVIDER DASHBOARD
-         ================================================================ -->
-    <section id="dashboardScreen" class="screen">
-      <section class="dashboard-header">
-        <div class="dashboard-provider">
-          <div id="providerAvatar" class="provider-avatar">DR</div>
-          <div class="provider-title">
-            <div class="eyebrow" style="margin-bottom: 6px; color: #b9ecff;">
-              Provider Workspace
-            </div>
-            <h1 id="providerNameHeading">Loading provider…</h1>
-            <p id="providerMeta">Loading clinic information…</p>
-          </div>
-        </div>
+    <section class="section soft-section">
+      <div class="site-shell">
+        <div class="section-heading">
+          <div class="eyebrow">How It Works</div>
+          <h2>A connected experience for providers and patients</h2>
 
-        <div class="dashboard-actions">
-          <button id="refreshDashboardButton" class="button button-secondary" type="button">
-            ↻ Refresh
-          </button>
-          <button id="changeProviderButton" class="button button-secondary" type="button">
-            Switch Provider
-          </button>
-        </div>
-      </section>
-
-      <section class="kpi-grid" aria-label="Practice financial and RPM summary">
-        <article class="kpi-card">
-          <div class="kpi-icon">◉</div>
-          <div class="kpi-label">Active RPM Patients</div>
-          <div id="activePatientsKpi" class="kpi-value">—</div>
-          <div class="kpi-footnote">Patients currently linked to this provider</div>
-        </article>
-
-        <article class="kpi-card">
-          <div class="kpi-icon">$</div>
-          <div class="kpi-label">Est. Gross RPM Billing</div>
-          <div id="grossBillingKpi" class="kpi-value">—</div>
-          <div class="kpi-footnote">Current model: active RPM count × $150/month</div>
-        </article>
-
-        <article class="kpi-card">
-          <div class="kpi-icon">↗</div>
-          <div class="kpi-label">Platform Revenue Share</div>
-          <div id="platformShareKpi" class="kpi-value">—</div>
-          <div class="kpi-footnote">Current prototype model: 50% of gross estimate</div>
-        </article>
-
-        <article class="kpi-card">
-          <div class="kpi-icon">✓</div>
-          <div class="kpi-label">Est. Clinic Retained</div>
-          <div id="clinicShareKpi" class="kpi-value">—</div>
-          <div class="kpi-footnote">Gross estimate less platform revenue share</div>
-        </article>
-      </section>
-
-      <section class="workspace-grid">
-        <article class="card roster-card">
-          <div class="roster-card-header">
-            <div>
-              <h2>Patient Roster</h2>
-              <p id="rosterSubtitle">Loading connected patients…</p>
-            </div>
-            <button id="addPatientButton" class="button button-primary" type="button">
-              + Add Patient
-            </button>
-          </div>
-
-          <div class="roster-controls">
-            <div class="input-with-icon">
-              <span>⌕</span>
-              <input
-                id="patientSearchInput"
-                type="text"
-                autocomplete="off"
-                placeholder="Search patient, Chart ID, doctor, target…"
-              />
-            </div>
-
-            <select id="workflowFilter">
-              <option value="">All billing statuses</option>
-              <option value="Not Ready">Not Ready</option>
-              <option value="Ready for Review">Ready for Review</option>
-              <option value="Under Review">Under Review</option>
-              <option value="Ready to Bill">Ready to Bill</option>
-              <option value="Billed">Billed</option>
-              <option value="On Hold">On Hold</option>
-            </select>
-
-            <select id="metricFilter">
-              <option value="">All metrics</option>
-              <option value="Blood Pressure">Blood Pressure</option>
-              <option value="Weight (lbs)">Weight (lbs)</option>
-              <option value="HbA1c (%)">HbA1c (%)</option>
-              <option value="BMI">BMI</option>
-            </select>
-          </div>
-
-          <div class="table-wrap">
-            <table aria-label="Selected provider patient roster">
-              <thead>
-                <tr>
-                  <th class="sortable" data-sort-key="name">Patient ↕</th>
-                  <th class="sortable" data-sort-key="chartId">Chart ID ↕</th>
-                  <th class="sortable" data-sort-key="metric">Program ↕</th>
-                  <th>Goal</th>
-                  <th class="sortable" data-sort-key="latestDate">Latest Reading ↕</th>
-                  <th class="sortable" data-sort-key="result">Result ↕</th>
-                  <th class="sortable" data-sort-key="workflow">Billing Workflow ↕</th>
-                  <th>Open</th>
-                </tr>
-              </thead>
-              <tbody id="patientRosterBody">
-                <tr>
-                  <td colspan="8" class="table-empty">Loading patient roster…</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </article>
-
-        <aside class="card insights-card">
-          <h2>Monitoring Snapshot</h2>
-          <p>
-            Current monitoring activity across patients connected to this provider.
+          <p class="lead">
+            RPM Health Rewards brings monitoring activity, progress feedback,
+            rewards, and operational review into a simple, coordinated workflow.
           </p>
+        </div>
 
-          <div class="activity-stat-grid">
-            <div class="activity-stat">
-              <div id="achievedCount" class="activity-stat-value">—</div>
-              <div class="activity-stat-label">Recent target achieved</div>
+        <div class="steps-grid">
+          <article class="step-card">
+            <div class="step-number">01</div>
+            <h3>Personalized monitoring plan</h3>
+            <p>
+              Providers configure an assigned patient, monitoring metric, and
+              individualized target such as a blood-pressure goal or weight target.
+            </p>
+          </article>
+
+          <article class="step-card">
+            <div class="step-number">02</div>
+            <h3>Simple patient engagement</h3>
+            <p>
+              Patients securely enter their assigned portal, see what they are
+              measuring, submit readings, and receive immediate progress feedback.
+            </p>
+          </article>
+
+          <article class="step-card">
+            <div class="step-number">03</div>
+            <h3>Provider operational visibility</h3>
+            <p>
+              Care teams review monitoring activity, reward records, system-generated
+              workflow notes, and internal billing-review status in one workspace.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="site-shell">
+        <div class="outcomes-grid">
+          <div class="outcomes-visual" aria-label="Illustration of patient monitoring progress over time">
+            <div class="outcome-chart-card">
+              <div class="outcome-chart-title">Monitoring progress</div>
+
+              <div class="chart-bars" aria-hidden="true">
+                <div class="bar-group">
+                  <div class="bar" style="height: 47px;"></div>
+                  <div class="bar-label">Mon</div>
+                </div>
+
+                <div class="bar-group">
+                  <div class="bar" style="height: 73px;"></div>
+                  <div class="bar-label">Tue</div>
+                </div>
+
+                <div class="bar-group">
+                  <div class="bar" style="height: 95px;"></div>
+                  <div class="bar-label">Wed</div>
+                </div>
+
+                <div class="bar-group">
+                  <div class="bar" style="height: 117px;"></div>
+                  <div class="bar-label">Thu</div>
+                </div>
+
+                <div class="bar-group">
+                  <div class="bar" style="height: 139px;"></div>
+                  <div class="bar-label">Fri</div>
+                </div>
+              </div>
             </div>
-            <div class="activity-stat">
-              <div id="missedCount" class="activity-stat-value">—</div>
-              <div class="activity-stat-label">Recent target missed</div>
-            </div>
-            <div class="activity-stat">
-              <div id="billingReviewCount" class="activity-stat-value">—</div>
-              <div class="activity-stat-label">Ready for review</div>
-            </div>
-            <div class="activity-stat">
-              <div id="onHoldCount" class="activity-stat-value">—</div>
-              <div class="activity-stat-label">On hold</div>
+
+            <div class="outcomes-stat">
+              <strong>Clear progress</strong>
+              <span>Simple, goal-oriented patient feedback</span>
             </div>
           </div>
 
-          <div class="section-title" style="margin: 0 0 10px;">
-            <h2 style="font-size: 0.98rem;">Recent activity</h2>
-            <span>Latest 6</span>
+          <div>
+            <div class="eyebrow">Designed for Engagement</div>
+            <h2>Make each monitoring interaction meaningful</h2>
+
+            <p class="lead">
+              The platform is designed around a clear principle: patients are more
+              likely to stay engaged when they understand their goal, receive timely
+              feedback, and can see meaningful progress.
+            </p>
+
+            <div class="feature-list">
+              <article class="feature-item">
+                <div class="feature-icon">♥</div>
+                <div>
+                  <h3>Patient-first experience</h3>
+                  <p>
+                    A mobile-friendly portal reminds patients what to measure,
+                    shows their goal, and makes routine submissions straightforward.
+                  </p>
+                </div>
+              </article>
+
+              <article class="feature-item">
+                <div class="feature-icon">▣</div>
+                <div>
+                  <h3>Provider workflow support</h3>
+                  <p>
+                    A centralized provider workspace supports patient review,
+                    monitoring activity visibility, reward history, and
+                    internal billing workflow management.
+                  </p>
+                </div>
+              </article>
+
+              <article class="feature-item">
+                <div class="feature-icon">★</div>
+                <div>
+                  <h3>Outcome-oriented rewards</h3>
+                  <p>
+                    Configured reward rules can recognize qualifying Blood Pressure
+                    and Weight outcomes while preserving a transparent rewards ledger.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="portals" class="portal-section">
+      <div class="site-shell">
+        <div class="section-heading">
+          <div class="eyebrow">Secure Portal Access</div>
+          <h2>Choose your RPM Health Rewards workspace</h2>
+
+          <p class="lead">
+            Provider and Patient experiences are accessed separately. Each portal
+            requires the appropriate authorized credentials.
+          </p>
+        </div>
+
+        <div class="portal-grid">
+          <article class="portal-card">
+            <div class="portal-card-content">
+              <div class="portal-icon">▦</div>
+
+              <div class="protected-badge">
+                <span aria-hidden="true">🔑</span>
+                Provider credentials required
+              </div>
+
+              <h3>Provider Portal</h3>
+
+              <p>
+                Review provider-scoped RPM patient rosters, monitoring activity,
+                patient details, rewards-wallet records, and internal billing workflow.
+              </p>
+
+              <div class="button-row">
+                <a class="button button-primary" href="providers.html">
+                  <span aria-hidden="true">🔑</span>
+                  Open Provider Portal
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="portal-card patient-card">
+            <div class="portal-card-content">
+              <div class="portal-icon">♥</div>
+
+              <div class="protected-badge">
+                <span aria-hidden="true">🔑</span>
+                Patient PIN required
+              </div>
+
+              <h3>Patient Portal</h3>
+
+              <p>
+                Review your monitoring plan, submit an assigned reading, view
+                recent activity and rewards, or install the mobile-friendly
+                portal directly to a supported device.
+              </p>
+
+              <div class="button-row">
+                <a class="button button-teal" href="rpm.html">
+                  <span aria-hidden="true">🔑</span>
+                  Open Patient Portal
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section">
+      <div class="site-shell">
+        <div class="faq-layout">
+          <aside class="faq-side-card">
+            <div class="faq-side-icon">?</div>
+            <h3>Frequently asked questions</h3>
+
+            <p>
+              This starter FAQ is intentionally easy to edit. Update the questions
+              and answers as the RPM Health Rewards offering, onboarding process,
+              and clinical operations mature.
+            </p>
+
+            <div class="button-row">
+              <a class="button button-secondary" href="#contact">
+                Ask a Question
+              </a>
+            </div>
+          </aside>
+
+          <div class="faq-list">
+            <details class="faq-item" open>
+              <summary>What is RPM Health Rewards?</summary>
+              <div class="faq-answer">
+                <p>
+                  RPM Health Rewards is a remote patient monitoring engagement
+                  platform concept that combines provider operational visibility
+                  with a patient-facing experience for assigned health metrics,
+                  progress feedback, and qualifying outcome rewards.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Who can use the Provider Portal?</summary>
+              <div class="faq-answer">
+                <p>
+                  The Provider Portal is intended for authorized clinical,
+                  operational, and billing-workflow users within participating
+                  provider organizations. Access requirements are determined by
+                  the organization’s implementation and security controls.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>How do patients access the Patient Portal?</summary>
+              <div class="faq-answer">
+                <p>
+                  Patients use a clinic-assigned PIN to access their monitoring
+                  plan, submit their assigned reading, and view recent activity.
+                  On compatible devices, the Patient Portal may also be installed
+                  as a Progressive Web App from the browser.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Can the Patient Portal be installed on a phone?</summary>
+              <div class="faq-answer">
+                <p>
+                  Yes. On supported Android browsers, the Patient Portal may show
+                  an Install option. On iPhone or iPad, open the portal in Safari,
+                  select Share, then choose Add to Home Screen.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>How do rewards work?</summary>
+              <div class="faq-answer">
+                <p>
+                  In the current prototype, qualifying Blood Pressure and Weight
+                  readings that meet configured targets can generate a recorded
+                  $5 reward transaction. HbA1c and BMI readings are logged but are
+                  not currently reward-enabled.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Does clicking a billing action submit an insurance claim?</summary>
+              <div class="faq-answer">
+                <p>
+                  No. The current Provider Portal supports an internal billing
+                  workflow such as Ready for Review, Under Review, Ready to Bill,
+                  or Billed. It does not submit, adjudicate, or verify payer claims.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Is this website providing medical advice?</summary>
+              <div class="faq-answer">
+                <p>
+                  No. RPM Health Rewards is an operational and patient-engagement
+                  platform concept. Individual clinical decisions, patient care,
+                  device selection, documentation, and billing determinations
+                  remain the responsibility of qualified providers and participating organizations.
+                </p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="section pricing-section">
+      <div class="site-shell">
+        <div class="pricing-content">
+          <div>
+            <div class="eyebrow">Pricing</div>
+            <h2>Flexible program design is coming soon.</h2>
+
+            <p class="lead">
+              RPM Health Rewards is being designed for provider organizations
+              seeking a practical, patient-centered approach to remote monitoring
+              engagement and operational workflow visibility.
+            </p>
+
+            <div class="button-row">
+              <a class="button button-secondary" href="#contact">
+                Reach Out for More Information
+              </a>
+            </div>
           </div>
 
-          <div id="recentActivityList">
-            <div class="empty-state">Loading recent monitoring activity…</div>
-          </div>
-        </aside>
-      </section>
+          <aside class="pricing-callout">
+            <div class="pricing-callout-label">Program model</div>
+            <strong>Coming Soon</strong>
+            <p>
+              Contact us to discuss provider workflows, pilot concepts,
+              patient-engagement goals, and potential implementation models.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
 
-      <p class="footer-note">
-        RPM Rewards Provider Portal prototype · Automated target results and
-        system-generated notes are not clinician review or payer-billing proof.
-      </p>
+    <section id="contact" class="section">
+      <div class="site-shell">
+        <div class="contact-layout">
+          <aside class="contact-details">
+            <div class="eyebrow">Contact RPM Health Rewards</div>
+            <h2>Let’s discuss your RPM workflow.</h2>
+
+            <p class="muted">
+              Reach out to learn more about the RPM Health Rewards platform,
+              prototype demonstrations, provider workflow concepts, or future
+              collaboration opportunities.
+            </p>
+
+            <div class="contact-methods">
+              <div class="contact-method">
+                <div class="contact-method-icon">✉</div>
+                <div>
+                  <div class="contact-method-label">Email</div>
+                  <a
+                    class="contact-method-value"
+                    href="mailto:rpm.health.rewards@gmail.com"
+                  >
+                    rpm.health.rewards@gmail.com
+                  </a>
+                </div>
+              </div>
+
+              <div class="contact-method">
+                <div class="contact-method-icon">◷</div>
+                <div>
+                  <div class="contact-method-label">Response</div>
+                  <div class="contact-method-value">
+                    We will respond as soon as possible.
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-method">
+                <div class="contact-method-icon">⌁</div>
+                <div>
+                  <div class="contact-method-label">Important</div>
+                  <div class="contact-method-value">
+                    Do not send patient, medical, or other sensitive information.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <article class="card contact-form-card">
+            <h2>Send a message</h2>
+
+            <p>
+              Use the form below for general business, partnership, and product
+              inquiries. Please do not include protected health information,
+              passwords, PINs, or other sensitive information.
+            </p>
+
+            <form id="contactForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="contactName">Your name</label>
+                  <input
+                    id="contactName"
+                    name="name"
+                    type="text"
+                    autocomplete="name"
+                    placeholder="Your name"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="contactEmail">Email address</label>
+                  <input
+                    id="contactEmail"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                    required
+                  />
+                </div>
+
+                <div class="form-group full">
+                  <label for="contactOrganization">Organization</label>
+                  <input
+                    id="contactOrganization"
+                    name="organization"
+                    type="text"
+                    autocomplete="organization"
+                    placeholder="Organization or practice name"
+                  />
+                </div>
+
+                <div class="form-group full">
+                  <label for="contactMessage">Message</label>
+                  <textarea
+                    id="contactMessage"
+                    name="message"
+                    placeholder="Tell us how we can help. Please do not include patient or sensitive information."
+                    required
+                  ></textarea>
+                </div>
+              </div>
+
+              <div id="contactFormStatus" class="form-status" role="alert"></div>
+
+              <div class="button-row">
+                <button id="contactSubmitButton" class="button button-primary" type="submit">
+                  Send Message
+                  <span aria-hidden="true">→</span>
+                </button>
+              </div>
+
+              <p class="form-note">
+                By submitting this form, you confirm that your message does not
+                contain patient information, medical information, passwords, PINs,
+                or other sensitive information.
+              </p>
+            </form>
+          </article>
+        </div>
+      </div>
     </section>
   </main>
 
-  <!-- ================================================================
-       SHARED DRAWER BACKDROP
-       ================================================================ -->
-  <div id="drawerBackdrop" class="drawer-backdrop"></div>
-
-  <!-- ================================================================
-       PATIENT DETAIL / EDIT DRAWER
-       ================================================================ -->
-  <aside id="patientDrawer" class="drawer" aria-hidden="true">
-    <header class="drawer-header">
-      <div>
-        <h2 id="drawerPatientName">Patient Details</h2>
-        <p id="drawerPatientMeta">Loading patient information…</p>
-      </div>
-      <button id="closePatientDrawerButton" class="drawer-close" type="button" aria-label="Close patient details">
-        ×
-      </button>
-    </header>
-
-    <div id="patientDrawerBody" class="drawer-body">
-      <div class="empty-state">Select a patient to review details.</div>
-    </div>
-  </aside>
-
-  <!-- ================================================================
-       ADD PATIENT DRAWER
-       ================================================================ -->
-  <aside id="addPatientDrawer" class="drawer" aria-hidden="true">
-    <header class="drawer-header">
-      <div>
-        <h2>Add New Patient</h2>
-        <p id="addPatientProviderContext">Patient will be linked to the selected provider.</p>
-      </div>
-      <button id="closeAddPatientDrawerButton" class="drawer-close" type="button" aria-label="Close add patient form">
-        ×
-      </button>
-    </header>
-
-    <div class="drawer-body">
-      <div class="drawer-section" style="margin-top: 0;">
-        <div class="drawer-section-head">
-          <div>
-            <h3>Patient Enrollment</h3>
-            <p>
-              Add a synthetic test patient and connect the record to the active
-              provider workspace.
-            </p>
-          </div>
+  <footer class="site-footer">
+    <div class="site-shell">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-mark">♥</span>
+          <span>RPM Health Rewards</span>
         </div>
 
-        <form id="addPatientForm" novalidate>
-          <div class="form-grid">
-            <div class="field">
-              <label for="newPatientName">Patient Name</label>
-              <input id="newPatientName" type="text" maxlength="120" placeholder="Example: Demo Patient 004" required />
-            </div>
-
-            <div class="field">
-              <label for="newPatientChartId">Clinic Chart ID</label>
-              <input id="newPatientChartId" type="text" maxlength="120" placeholder="Example: TEST-004" required />
-            </div>
-
-            <div class="field">
-              <label for="newPatientMetric">Target Metric Type</label>
-              <select id="newPatientMetric" required>
-                <option value="Blood Pressure">Blood Pressure</option>
-                <option value="Weight (lbs)">Weight (lbs)</option>
-                <option value="HbA1c (%)">HbA1c (%)</option>
-                <option value="BMI">BMI</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="newPatientTarget">Target Value</label>
-              <input id="newPatientTarget" type="text" maxlength="50" placeholder="Example: 130/80" required />
-            </div>
-
-            <div class="field">
-              <label for="newPatientPin">Patient App PIN</label>
-              <input id="newPatientPin" type="text" inputmode="numeric" autocomplete="off" maxlength="32" placeholder="Example: 4004" required />
-            </div>
-
-            <div class="field">
-              <label for="newPatientWorkflow">Billing Workflow Status</label>
-              <select id="newPatientWorkflow" required>
-                <option value="Not Ready" selected>Not Ready</option>
-                <option value="Ready for Review">Ready for Review</option>
-                <option value="Under Review">Under Review</option>
-                <option value="Ready to Bill">Ready to Bill</option>
-                <option value="Billed">Billed</option>
-                <option value="On Hold">On Hold</option>
-              </select>
-            </div>
-
-            <div class="field full">
-              <label for="newPatientAssignedDoctor">Assigned Doctor</label>
-              <input id="newPatientAssignedDoctor" type="text" maxlength="120" readonly />
-              <p class="small" style="margin: 7px 0 0;">
-                This is prefilled from the selected provider and may be edited
-                later in the patient detail drawer.
-              </p>
-            </div>
-          </div>
-
-          <div id="addPatientStatus" class="status-message" role="alert"></div>
-
-          <div class="button-row">
-            <button id="saveNewPatientButton" class="button button-primary" type="submit">
-              Create Patient
-            </button>
-            <button id="cancelNewPatientButton" class="button button-secondary" type="button">
-              Cancel
-            </button>
-          </div>
-        </form>
-
-        <div class="notice">
-          <span class="notice-icon">ⓘ</span>
-          <span>
-            The portal will validate duplicate patient name, Clinic Chart ID,
-            and App PIN values before creating the prototype record.
-          </span>
+        <div class="footer-links">
+          <a href="#home">Home</a>
+          <a href="providers.html">Provider Portal</a>
+          <a href="rpm.html">Patient Portal</a>
+          <a href="#faq">FAQ</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#contact">Contact</a>
         </div>
+
+        <p class="footer-note">
+          © <span id="currentYear"></span> RPM Health Rewards. Prototype website.
+          This website and associated prototype tools do not provide medical advice,
+          make clinical determinations, submit insurance claims, or replace the
+          judgment of qualified healthcare professionals.
+        </p>
       </div>
     </div>
-  </aside>
+  </footer>
 
   <script>
     "use strict";
 
-    /*
-      =======================================================================
-      CONFIGURATION
-      =======================================================================
+    const mobileMenuButton = document.getElementById("mobileMenuButton");
+    const mobileNav = document.getElementById("mobileNav");
+    const contactForm = document.getElementById("contactForm");
+    const contactFormStatus = document.getElementById("contactFormStatus");
+    const contactSubmitButton = document.getElementById("contactSubmitButton");
 
-      DIRECT BROWSER-TO-AIRTABLE PROTOTYPE ONLY.
-      Use a dedicated, restricted test-data PAT and replace it with a
-      secure server-side / authenticated architecture before production.
-    */
+    mobileMenuButton.addEventListener("click", () => {
+      const isOpen = mobileNav.classList.toggle("open");
 
-    const AIRTABLE_BASE_ID = "appM02rx1BXGfqZBg";
-    const AIRTABLE_PAT = "patJ3q6pem42aW1Vw.026ff4a06a3a34ad35e7c64f07690e4292aa7a987809045fa5c34752da0c2a06";
-
-    const TABLES = {
-      patients: "Patients",
-      vitals: "Vitals Log",
-      wallet: "Rewards Wallet",
-      providers: "Providers"
-    };
-
-    const REVENUE_PER_ACTIVE_PATIENT = 150;
-    const PLATFORM_REVENUE_SHARE = 0.50;
-    const MAX_PATIENT_DETAIL_HISTORY = 10;
-    const MAX_ACTIVITY_ITEMS = 6;
-
-    const BILLING_WORKFLOW_OPTIONS = [
-      "Not Ready",
-      "Ready for Review",
-      "Under Review",
-      "Ready to Bill",
-      "Billed",
-      "On Hold"
-    ];
-
-    const state = {
-      providers: [],
-      selectedProvider: null,
-      allPatients: [],
-      rosterPatients: [],
-      patientSummaries: new Map(),
-      selectedPatient: null,
-      patientDetail: null,
-      sort: {
-        key: "name",
-        direction: "asc"
-      }
-    };
-
-    const el = {
-      providerSelectScreen: document.getElementById("providerSelectScreen"),
-      dashboardScreen: document.getElementById("dashboardScreen"),
-
-      providerSelectForm: document.getElementById("providerSelectForm"),
-      providerSelect: document.getElementById("providerSelect"),
-      providerSelectStatus: document.getElementById("providerSelectStatus"),
-      providerContinueButton: document.getElementById("providerContinueButton"),
-
-      providerAvatar: document.getElementById("providerAvatar"),
-      providerNameHeading: document.getElementById("providerNameHeading"),
-      providerMeta: document.getElementById("providerMeta"),
-      refreshDashboardButton: document.getElementById("refreshDashboardButton"),
-      changeProviderButton: document.getElementById("changeProviderButton"),
-
-      activePatientsKpi: document.getElementById("activePatientsKpi"),
-      grossBillingKpi: document.getElementById("grossBillingKpi"),
-      platformShareKpi: document.getElementById("platformShareKpi"),
-      clinicShareKpi: document.getElementById("clinicShareKpi"),
-
-      rosterSubtitle: document.getElementById("rosterSubtitle"),
-      patientSearchInput: document.getElementById("patientSearchInput"),
-      workflowFilter: document.getElementById("workflowFilter"),
-      metricFilter: document.getElementById("metricFilter"),
-      patientRosterBody: document.getElementById("patientRosterBody"),
-      addPatientButton: document.getElementById("addPatientButton"),
-
-      achievedCount: document.getElementById("achievedCount"),
-      missedCount: document.getElementById("missedCount"),
-      billingReviewCount: document.getElementById("billingReviewCount"),
-      onHoldCount: document.getElementById("onHoldCount"),
-      recentActivityList: document.getElementById("recentActivityList"),
-
-      drawerBackdrop: document.getElementById("drawerBackdrop"),
-
-      patientDrawer: document.getElementById("patientDrawer"),
-      drawerPatientName: document.getElementById("drawerPatientName"),
-      drawerPatientMeta: document.getElementById("drawerPatientMeta"),
-      patientDrawerBody: document.getElementById("patientDrawerBody"),
-      closePatientDrawerButton: document.getElementById("closePatientDrawerButton"),
-
-      addPatientDrawer: document.getElementById("addPatientDrawer"),
-      addPatientProviderContext: document.getElementById("addPatientProviderContext"),
-      closeAddPatientDrawerButton: document.getElementById("closeAddPatientDrawerButton"),
-      cancelNewPatientButton: document.getElementById("cancelNewPatientButton"),
-      addPatientForm: document.getElementById("addPatientForm"),
-      newPatientName: document.getElementById("newPatientName"),
-      newPatientChartId: document.getElementById("newPatientChartId"),
-      newPatientMetric: document.getElementById("newPatientMetric"),
-      newPatientTarget: document.getElementById("newPatientTarget"),
-      newPatientPin: document.getElementById("newPatientPin"),
-      newPatientWorkflow: document.getElementById("newPatientWorkflow"),
-      newPatientAssignedDoctor: document.getElementById("newPatientAssignedDoctor"),
-      addPatientStatus: document.getElementById("addPatientStatus"),
-      saveNewPatientButton: document.getElementById("saveNewPatientButton")
-    };
-
-    /* ================================================================
-       GENERIC HELPERS
-       ================================================================ */
-
-    function tableUrl(tableName) {
-      return `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(tableName)}`;
-    }
-
-    function recordUrl(tableName, recordId) {
-      return `${tableUrl(tableName)}/${recordId}`;
-    }
-
-    function airtableHeaders() {
-      return {
-        Authorization: `Bearer ${AIRTABLE_PAT}`,
-        "Content-Type": "application/json"
-      };
-    }
-
-    function isPatConfigured() {
-      return (
-        AIRTABLE_PAT &&
-        AIRTABLE_PAT !== "PASTE_YOUR_AIRTABLE_PAT_HERE" &&
-        AIRTABLE_PAT.startsWith("pat")
+      mobileMenuButton.setAttribute("aria-expanded", String(isOpen));
+      mobileMenuButton.textContent = isOpen ? "×" : "☰";
+      mobileMenuButton.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation menu" : "Open navigation menu"
       );
-    }
-
-    function setStatus(element, message = "", type = "info") {
-      element.textContent = message;
-      element.className = "status-message";
-
-      if (message) {
-        element.classList.add("visible", type);
-      }
-    }
-
-    function setButtonLoading(button, loading, loadingText) {
-      if (!button.dataset.defaultLabel) {
-        button.dataset.defaultLabel = button.textContent;
-      }
-
-      button.disabled = loading;
-      button.textContent = loading ? loadingText : button.dataset.defaultLabel;
-    }
-
-    function showScreen(name) {
-      el.providerSelectScreen.classList.toggle("active", name === "select");
-      el.dashboardScreen.classList.toggle("active", name === "dashboard");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function escapeHtml(value) {
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    function escapeAirtableFormulaString(value) {
-      return String(value)
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'");
-    }
-
-    function getFirstFieldValue(fields, fieldName, fallback = "") {
-      const value = fields?.[fieldName];
-
-      if (Array.isArray(value)) {
-        return value.length ? value[0] : fallback;
-      }
-
-      return value ?? fallback;
-    }
-
-    function getArrayFieldValue(fields, fieldName) {
-      const value = fields?.[fieldName];
-      return Array.isArray(value) ? value : [];
-    }
-
-    function initials(value) {
-      return (
-        String(value || "RP")
-          .replace(/^Dr\.?\s*/i, "")
-          .split(/\s+/)
-          .filter(Boolean)
-          .slice(0, 2)
-          .map((piece) => piece.charAt(0).toUpperCase())
-          .join("") || "RP"
-      );
-    }
-
-    function formatCurrency(value) {
-      const amount = Number(value) || 0;
-
-      return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 2
-      }).format(amount);
-    }
-
-    function formatDateTime(value) {
-      if (!value) return "No activity yet";
-
-      const date = new Date(value);
-
-      if (Number.isNaN(date.getTime())) {
-        return String(value);
-      }
-
-      return new Intl.DateTimeFormat("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-        hour: "numeric",
-        minute: "2-digit"
-      }).format(date);
-    }
-
-    function formatShortDate(value) {
-      if (!value) return "No activity";
-
-      const date = new Date(value);
-
-      if (Number.isNaN(date.getTime())) {
-        return String(value);
-      }
-
-      return new Intl.DateTimeFormat("en-US", {
-        month: "short",
-        day: "numeric",
-        hour: "numeric"
-      }).format(date);
-    }
-
-    function formatMetric(metric, value) {
-      if (value === null || value === undefined || value === "") return "—";
-
-      if (metric === "Weight (lbs)") return `${value} lbs`;
-      if (metric === "HbA1c (%)") return `${value}%`;
-
-      return String(value);
-    }
-
-    function workflowPillClass(status) {
-      switch (status) {
-        case "Ready for Review":
-          return "pill-warning";
-        case "Under Review":
-          return "pill-info";
-        case "Ready to Bill":
-          return "pill-success";
-        case "Billed":
-          return "pill-purple";
-        case "On Hold":
-          return "pill-danger";
-        default:
-          return "pill-neutral";
-      }
-    }
-
-    function resultPillClass(status) {
-      if (status === "Target Achieved") return "pill-success";
-      if (status === "Target Missed") return "pill-warning";
-      if (status === "Critical Escalation") return "pill-danger";
-      return "pill-neutral";
-    }
-
-    function normalizeSingleSelect(value, fallback = "") {
-      if (Array.isArray(value)) return value[0] || fallback;
-      return value || fallback;
-    }
-
-    async function airtableRequest(url, options = {}) {
-      const response = await fetch(url, {
-        ...options,
-        headers: {
-          ...airtableHeaders(),
-          ...(options.headers || {})
-        }
-      });
-
-      let data = null;
-
-      try {
-        data = await response.json();
-      } catch {
-        data = null;
-      }
-
-      if (!response.ok) {
-        const message =
-          data?.error?.message ||
-          data?.error?.type ||
-          `Airtable request failed with status ${response.status}.`;
-
-        throw new Error(message);
-      }
-
-      return data;
-    }
-
-    async function fetchAllRecords(tableName, params = {}) {
-      const records = [];
-      let offset = null;
-
-      do {
-        const searchParams = new URLSearchParams(params);
-
-        if (offset) {
-          searchParams.set("offset", offset);
-        }
-
-        const data = await airtableRequest(
-          `${tableUrl(tableName)}?${searchParams.toString()}`
-        );
-
-        records.push(...(data.records || []));
-        offset = data.offset || null;
-      } while (offset);
-
-      return records;
-    }
-
-    /* ================================================================
-       NORMALIZERS
-       ================================================================ */
-
-    function normalizeProvider(record) {
-      const fields = record.fields || {};
-
-      return {
-        recordId: record.id,
-        name: getFirstFieldValue(fields, "Provider Name", "Unnamed Provider"),
-        clinicName: getFirstFieldValue(fields, "Clinic / Facility Name", ""),
-        npi: getFirstFieldValue(fields, "NPI Number", ""),
-        email: getFirstFieldValue(fields, "Provider Email", ""),
-        assignedPatientIds: getArrayFieldValue(fields, "Assigned Patients"),
-        activeRpmCount: Number(fields["Active RPM Count"]) || 0,
-        grossBilling: Number(fields["Gross RPM Billing Est."]) || 0,
-        platformShare: Number(fields["Startup Revenue Share"]) || 0
-      };
-    }
-
-    function normalizePatient(record) {
-      const fields = record.fields || {};
-
-      return {
-        recordId: record.id,
-        name: getFirstFieldValue(fields, "Name", "Unnamed Patient"),
-        displayName: getFirstFieldValue(
-          fields,
-          "Patient Display Name",
-          getFirstFieldValue(fields, "Name", "Unnamed Patient")
-        ),
-        chartId: getFirstFieldValue(fields, "Clinic Chart ID", ""),
-        assignedDoctor: getFirstFieldValue(fields, "Assigned Doctor", ""),
-        metric: getFirstFieldValue(fields, "Target Metric Type", ""),
-        target: getFirstFieldValue(fields, "Target Value", ""),
-        appPin: getFirstFieldValue(fields, "App PIN", ""),
-        providerIds: getArrayFieldValue(fields, "Providers"),
-        billingWorkflow: normalizeSingleSelect(
-          fields["Billing Workflow Status"],
-          "Not Ready"
-        ),
-        billingReviewStatus: getFirstFieldValue(fields, "Billing Review Status", ""),
-        raw: record
-      };
-    }
-
-    function normalizeVital(record) {
-      const fields = record.fields || {};
-
-      return {
-        recordId: record.id,
-        patientNames: getArrayFieldValue(fields, "Patient"),
-        submittedValue: getFirstFieldValue(fields, "Patient Submitted Value", ""),
-        metricCategory: getFirstFieldValue(
-          fields,
-          "Patient Metric Category Text",
-          getFirstFieldValue(fields, "Metric Category", "")
-        ),
-        targetBaseline: getFirstFieldValue(fields, "Patient Target Baseline", ""),
-        evaluationStatus: normalizeSingleSelect(
-          fields["AI Evaluation Status"],
-          "Logged"
-        ),
-        coachMessage: getFirstFieldValue(fields, "AI Coach Message", ""),
-        cptLog: getFirstFieldValue(fields, "CPT 99457 Log", ""),
-        createdTime: fields["System Created Time"] || record.createdTime || "",
-        raw: record
-      };
-    }
-
-    function normalizeReward(record) {
-      const fields = record.fields || {};
-
-      return {
-        recordId: record.id,
-        patientNames: getArrayFieldValue(fields, "Patient"),
-        transactionId: fields["Transaction ID"] ?? "",
-        amount: Number(fields.Amount) || 0,
-        milestone: normalizeSingleSelect(fields["Milestone Trigger"], "Reward"),
-        dateEarned: fields["Date Earned"] || fields["Date Created"] || record.createdTime || "",
-        raw: record
-      };
-    }
-
-    /* ================================================================
-       PROVIDER SELECT
-       ================================================================ */
-
-    async function loadProviders() {
-      if (!isPatConfigured()) {
-        throw new Error(
-          "Add a dedicated Airtable prototype PAT in AIRTABLE_PAT before using this portal."
-        );
-      }
-
-      const records = await fetchAllRecords(TABLES.providers, {
-        "sort[0][field]": "Provider Name",
-        "sort[0][direction]": "asc",
-        pageSize: "100"
-      });
-
-      state.providers = records.map(normalizeProvider);
-
-      el.providerSelect.innerHTML = `
-        <option value="">Select a provider workspace…</option>
-        ${state.providers
-          .map((provider) => {
-            const label = provider.clinicName
-              ? `${provider.name} — ${provider.clinicName}`
-              : provider.name;
-
-            return `<option value="${escapeHtml(provider.recordId)}">${escapeHtml(label)}</option>`;
-          })
-          .join("")}
-      `;
-
-      if (!state.providers.length) {
-        setStatus(
-          el.providerSelectStatus,
-          'No Provider records were found. Add at least one record to the "Providers" table before continuing.',
-          "error"
-        );
-      }
-    }
-
-    async function handleProviderSelectSubmit(event) {
-      event.preventDefault();
-      setStatus(el.providerSelectStatus, "");
-
-      const selectedId = el.providerSelect.value;
-
-      if (!selectedId) {
-        setStatus(el.providerSelectStatus, "Select a provider workspace to continue.", "error");
-        return;
-      }
-
-      const provider = state.providers.find((entry) => entry.recordId === selectedId);
-
-      if (!provider) {
-        setStatus(el.providerSelectStatus, "The selected provider could not be loaded. Please try again.", "error");
-        return;
-      }
-
-      state.selectedProvider = provider;
-
-      setButtonLoading(el.providerContinueButton, true, "Loading workspace…");
-
-      try {
-        renderProviderHeader();
-        showScreen("dashboard");
-        await refreshDashboard();
-      } catch (error) {
-        showScreen("select");
-        setStatus(
-          el.providerSelectStatus,
-          `Unable to load provider workspace. ${error.message || "Please try again."}`,
-          "error"
-        );
-      } finally {
-        setButtonLoading(el.providerContinueButton, false);
-      }
-    }
-
-    function renderProviderHeader() {
-      const provider = state.selectedProvider;
-
-      if (!provider) return;
-
-      el.providerAvatar.textContent = initials(provider.name);
-      el.providerNameHeading.textContent = provider.name;
-
-      const meta = [];
-
-      if (provider.clinicName) meta.push(provider.clinicName);
-      if (provider.npi) meta.push(`NPI: ${provider.npi}`);
-      if (provider.email) meta.push(provider.email);
-
-      el.providerMeta.textContent = meta.join(" · ") || "RPM Provider Workspace";
-    }
-
-    /* ================================================================
-       PATIENT QUERIES AND DASHBOARD LOADING
-       ================================================================ */
-
-    /*
-      Controlled-prototype provider scoping:
-      The app filters the Patients linked record field using the selected
-      Provider table primary value: Provider Name.
-
-      This assumes Provider Name is unique in this prototype. A future
-      production-ready version should expose a Provider RECORD_ID() lookup
-      field in Patients and filter by immutable record ID instead.
-    */
-    function providerPatientFormula(providerName) {
-      const safeProviderName = escapeAirtableFormulaString(providerName);
-      return `{Providers}='${safeProviderName}'`;
-    }
-
-    async function fetchProviderPatients(provider) {
-      const records = await fetchAllRecords(TABLES.patients, {
-        filterByFormula: providerPatientFormula(provider.name),
-        "sort[0][field]": "Name",
-        "sort[0][direction]": "asc",
-        pageSize: "100"
-      });
-
-      return records.map(normalizePatient);
-    }
-
-    /*
-      Controlled-prototype history lookup:
-      Existing patient app history uses linked Patient primary-field values
-      (Patient Name) for Vitals Log and Rewards Wallet filters.
-
-      This works with unique synthetic Names. Upgrade later to an immutable
-      Patient Internal Record ID lookup in both child tables.
-    */
-    function patientHistoryFormula(patientName) {
-      const safePatientName = escapeAirtableFormulaString(patientName);
-      return `{Patient}='${safePatientName}'`;
-    }
-
-    async function fetchVitalsForPatient(patientName, maxRecords = MAX_PATIENT_DETAIL_HISTORY) {
-      const records = await fetchAllRecords(TABLES.vitals, {
-        filterByFormula: patientHistoryFormula(patientName),
-        "sort[0][field]": "System Created Time",
-        "sort[0][direction]": "desc",
-        maxRecords: String(maxRecords),
-        pageSize: String(maxRecords)
-      });
-
-      return records.map(normalizeVital);
-    }
-
-    async function fetchRewardsForPatient(patientName, maxRecords = MAX_PATIENT_DETAIL_HISTORY) {
-      const records = await fetchAllRecords(TABLES.wallet, {
-        filterByFormula: patientHistoryFormula(patientName),
-        "sort[0][field]": "Date Created",
-        "sort[0][direction]": "desc",
-        maxRecords: String(maxRecords),
-        pageSize: String(maxRecords)
-      });
-
-      return records.map(normalizeReward);
-    }
-
-    async function buildPatientSummaries(patients) {
-      const summaryMap = new Map();
-
-      /*
-        This launches the small per-patient history queries in parallel.
-        It is suitable for a limited synthetic-data prototype roster.
-        For larger real-world panels, replace it with denormalized Airtable
-        rollups/lookups or server-side aggregation to reduce API volume.
-      */
-      await Promise.all(
-        patients.map(async (patient) => {
-          try {
-            const [vitals, rewards] = await Promise.all([
-              fetchVitalsForPatient(patient.name, 1),
-              fetchRewardsForPatient(patient.name, 100)
-            ]);
-
-            const latestVital = vitals[0] || null;
-            const rewardTotal = rewards.reduce((sum, reward) => sum + reward.amount, 0);
-
-            summaryMap.set(patient.recordId, {
-              latestVital,
-              rewardTotal,
-              recentRewards: rewards
-            });
-          } catch (error) {
-            summaryMap.set(patient.recordId, {
-              latestVital: null,
-              rewardTotal: 0,
-              recentRewards: [],
-              error: error.message
-            });
-          }
-        })
-      );
-
-      return summaryMap;
-    }
-
-    async function refreshDashboard() {
-      if (!state.selectedProvider) return;
-
-      setButtonLoading(el.refreshDashboardButton, true, "Refreshing…");
-
-      el.patientRosterBody.innerHTML =
-        '<tr><td colspan="8" class="table-empty">Loading provider-scoped patient roster…</td></tr>';
-
-      el.recentActivityList.innerHTML =
-        '<div class="empty-state">Loading recent monitoring activity…</div>';
-
-      try {
-        const patients = await fetchProviderPatients(state.selectedProvider);
-
-        state.allPatients = patients;
-        state.patientSummaries = await buildPatientSummaries(patients);
-
-        renderKpis();
-        applyRosterFiltersAndRender();
-        renderMonitoringSnapshot();
-      } catch (error) {
-        el.patientRosterBody.innerHTML =
-          `<tr><td colspan="8" class="table-empty">Unable to load patient roster: ${escapeHtml(error.message || "Unknown error")}</td></tr>`;
-
-        el.recentActivityList.innerHTML =
-          `<div class="empty-state">Unable to load activity: ${escapeHtml(error.message || "Unknown error")}</div>`;
-      } finally {
-        setButtonLoading(el.refreshDashboardButton, false);
-      }
-    }
-
-    function renderKpis() {
-      const provider = state.selectedProvider;
-      const patientCount = state.allPatients.length;
-
-      /*
-        Prefer the actual number of provider-scoped Patients shown in this
-        portal. Provider formula fields are still used as a fallback if needed.
-      */
-      const activeCount = patientCount || provider.activeRpmCount || 0;
-
-      const gross =
-        Number(provider.grossBilling) ||
-        activeCount * REVENUE_PER_ACTIVE_PATIENT;
-
-      const platform =
-        Number(provider.platformShare) ||
-        gross * PLATFORM_REVENUE_SHARE;
-
-      const clinic = gross - platform;
-
-      el.activePatientsKpi.textContent = activeCount.toLocaleString("en-US");
-      el.grossBillingKpi.textContent = formatCurrency(gross);
-      el.platformShareKpi.textContent = formatCurrency(platform);
-      el.clinicShareKpi.textContent = formatCurrency(clinic);
-
-      el.rosterSubtitle.textContent =
-        `${patientCount} patient${patientCount === 1 ? "" : "s"} linked to ${provider.name}`;
-    }
-
-    /* ================================================================
-       ROSTER RENDERING
-       ================================================================ */
-
-    function getFilteredPatients() {
-      const query = el.patientSearchInput.value.trim().toLowerCase();
-      const workflow = el.workflowFilter.value;
-      const metric = el.metricFilter.value;
-
-      const filtered = state.allPatients.filter((patient) => {
-        const matchesSearch =
-          !query ||
-          [
-            patient.name,
-            patient.displayName,
-            patient.chartId,
-            patient.assignedDoctor,
-            patient.metric,
-            patient.target,
-            patient.billingWorkflow
-          ]
-            .join(" ")
-            .toLowerCase()
-            .includes(query);
-
-        const matchesWorkflow = !workflow || patient.billingWorkflow === workflow;
-        const matchesMetric = !metric || patient.metric === metric;
-
-        return matchesSearch && matchesWorkflow && matchesMetric;
-      });
-
-      return filtered.sort((a, b) => {
-        const summaryA = state.patientSummaries.get(a.recordId) || {};
-        const summaryB = state.patientSummaries.get(b.recordId) || {};
-        const direction = state.sort.direction === "asc" ? 1 : -1;
-
-        let valueA = "";
-        let valueB = "";
-
-        switch (state.sort.key) {
-          case "chartId":
-            valueA = a.chartId || "";
-            valueB = b.chartId || "";
-            break;
-          case "metric":
-            valueA = a.metric || "";
-            valueB = b.metric || "";
-            break;
-          case "latestDate":
-            valueA = summaryA.latestVital?.createdTime || "";
-            valueB = summaryB.latestVital?.createdTime || "";
-            break;
-          case "result":
-            valueA = summaryA.latestVital?.evaluationStatus || "";
-            valueB = summaryB.latestVital?.evaluationStatus || "";
-            break;
-          case "workflow":
-            valueA = a.billingWorkflow || "";
-            valueB = b.billingWorkflow || "";
-            break;
-          case "name":
-          default:
-            valueA = a.name || "";
-            valueB = b.name || "";
-            break;
-        }
-
-        if (state.sort.key === "latestDate") {
-          const timeA = valueA ? new Date(valueA).getTime() : 0;
-          const timeB = valueB ? new Date(valueB).getTime() : 0;
-          return (timeA - timeB) * direction;
-        }
-
-        return String(valueA).localeCompare(String(valueB), undefined, {
-          numeric: true,
-          sensitivity: "base"
-        }) * direction;
-      });
-    }
-
-    function applyRosterFiltersAndRender() {
-      state.rosterPatients = getFilteredPatients();
-      renderRoster(state.rosterPatients);
-    }
-
-    function renderRoster(patients) {
-      if (!patients.length) {
-        el.patientRosterBody.innerHTML =
-          '<tr><td colspan="8" class="table-empty">No patients match the current search or filters.</td></tr>';
-        return;
-      }
-
-      el.patientRosterBody.innerHTML = patients
-        .map((patient) => {
-          const summary = state.patientSummaries.get(patient.recordId) || {};
-          const latest = summary.latestVital;
-          const latestReading = latest?.submittedValue || "No submissions";
-          const latestDate = latest?.createdTime
-            ? formatShortDate(latest.createdTime)
-            : "No activity";
-          const latestResult = latest?.evaluationStatus || "No result";
-
-          return `
-            <tr data-patient-id="${escapeHtml(patient.recordId)}" tabindex="0">
-              <td>
-                <div class="patient-cell">
-                  <div class="patient-initial">${escapeHtml(initials(patient.name))}</div>
-                  <div>
-                    <div class="patient-name">${escapeHtml(patient.name)}</div>
-                    <div class="patient-subline">${escapeHtml(patient.assignedDoctor || "No doctor assigned")}</div>
-                  </div>
-                </div>
-              </td>
-              <td>${escapeHtml(patient.chartId || "—")}</td>
-              <td>${escapeHtml(patient.metric || "—")}</td>
-              <td>${escapeHtml(formatMetric(patient.metric, patient.target))}</td>
-              <td>
-                <div class="reading-main">${escapeHtml(latestReading)}</div>
-                <div class="reading-sub">${escapeHtml(latestDate)}</div>
-              </td>
-              <td>
-                <span class="pill ${resultPillClass(latestResult)}">${escapeHtml(latestResult)}</span>
-              </td>
-              <td>
-                <span class="pill ${workflowPillClass(patient.billingWorkflow)}">${escapeHtml(patient.billingWorkflow || "Not Ready")}</span>
-              </td>
-              <td>
-                <button class="button button-text button-small open-patient-button" type="button" data-patient-id="${escapeHtml(patient.recordId)}">
-                  Open →
-                </button>
-              </td>
-            </tr>
-          `;
-        })
-        .join("");
-
-      el.patientRosterBody.querySelectorAll("tr[data-patient-id]").forEach((row) => {
-        row.addEventListener("click", (event) => {
-          const button = event.target.closest(".open-patient-button");
-
-          if (button) {
-            event.stopPropagation();
-          }
-
-          const patientId = button?.dataset.patientId || row.dataset.patientId;
-          openPatientDrawer(patientId);
-        });
-
-        row.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            openPatientDrawer(row.dataset.patientId);
-          }
-        });
-      });
-    }
-
-    function renderMonitoringSnapshot() {
-      const summaries = [...state.patientSummaries.entries()]
-        .map(([patientId, summary]) => {
-          const patient = state.allPatients.find((entry) => entry.recordId === patientId);
-          return { patient, summary };
-        })
-        .filter((entry) => entry.patient);
-
-      const achieved = summaries.filter(
-        (entry) => entry.summary.latestVital?.evaluationStatus === "Target Achieved"
-      ).length;
-
-      const missed = summaries.filter(
-        (entry) => entry.summary.latestVital?.evaluationStatus === "Target Missed"
-      ).length;
-
-      const readyForReview = state.allPatients.filter(
-        (patient) => patient.billingWorkflow === "Ready for Review"
-      ).length;
-
-      const onHold = state.allPatients.filter(
-        (patient) => patient.billingWorkflow === "On Hold"
-      ).length;
-
-      el.achievedCount.textContent = achieved.toLocaleString("en-US");
-      el.missedCount.textContent = missed.toLocaleString("en-US");
-      el.billingReviewCount.textContent = readyForReview.toLocaleString("en-US");
-      el.onHoldCount.textContent = onHold.toLocaleString("en-US");
-
-      const activity = summaries
-        .filter((entry) => entry.summary.latestVital?.createdTime)
-        .sort((a, b) => {
-          const dateA = new Date(a.summary.latestVital.createdTime).getTime();
-          const dateB = new Date(b.summary.latestVital.createdTime).getTime();
-          return dateB - dateA;
-        })
-        .slice(0, MAX_ACTIVITY_ITEMS);
-
-      if (!activity.length) {
-        el.recentActivityList.innerHTML =
-          '<div class="empty-state">No submitted vitals are available for this provider’s patients yet.</div>';
-        return;
-      }
-
-      el.recentActivityList.innerHTML = `
-        <div class="activity-list">
-          ${activity
-            .map(({ patient, summary }) => {
-              const vital = summary.latestVital;
-
-              return `
-                <article class="activity-row">
-                  <div class="activity-row-top">
-                    <div class="activity-patient">${escapeHtml(patient.name)}</div>
-                    <span class="pill ${resultPillClass(vital.evaluationStatus)}">${escapeHtml(vital.evaluationStatus)}</span>
-                  </div>
-                  <div class="activity-meta">
-                    ${escapeHtml(vital.submittedValue || "Reading")} ·
-                    ${escapeHtml(formatShortDate(vital.createdTime))}
-                  </div>
-                </article>
-              `;
-            })
-            .join("")}
-        </div>
-      `;
-    }
-
-    /* ================================================================
-       PATIENT DRAWER
-       ================================================================ */
-
-    function openDrawer(drawer) {
-      el.drawerBackdrop.classList.add("open");
-      drawer.classList.add("open");
-      drawer.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeAllDrawers() {
-      el.drawerBackdrop.classList.remove("open");
-      el.patientDrawer.classList.remove("open");
-      el.addPatientDrawer.classList.remove("open");
-      el.patientDrawer.setAttribute("aria-hidden", "true");
-      el.addPatientDrawer.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-    }
-
-    async function openPatientDrawer(patientId) {
-      const patient = state.allPatients.find((entry) => entry.recordId === patientId);
-
-      if (!patient) return;
-
-      state.selectedPatient = patient;
-      state.patientDetail = null;
-
-      el.drawerPatientName.textContent = patient.name;
-      el.drawerPatientMeta.textContent =
-        `${patient.chartId || "No Chart ID"} · ${patient.metric || "Monitoring type not configured"}`;
-
-      el.patientDrawerBody.innerHTML =
-        '<div class="empty-state">Loading patient history, reward activity, and workflow details…</div>';
-
-      openDrawer(el.patientDrawer);
-
-      try {
-        const [vitals, rewards] = await Promise.all([
-          fetchVitalsForPatient(patient.name, MAX_PATIENT_DETAIL_HISTORY),
-          fetchRewardsForPatient(patient.name, MAX_PATIENT_DETAIL_HISTORY)
-        ]);
-
-        state.patientDetail = {
-          patient,
-          vitals,
-          rewards
-        };
-
-        renderPatientDrawer();
-      } catch (error) {
-        el.patientDrawerBody.innerHTML =
-          `<div class="empty-state">Unable to load patient detail: ${escapeHtml(error.message || "Unknown error")}</div>`;
-      }
-    }
-
-    function renderPatientDrawer() {
-      if (!state.patientDetail) return;
-
-      const { patient, vitals, rewards } = state.patientDetail;
-      const latestVital = vitals[0] || null;
-      const rewardTotal = rewards.reduce((sum, reward) => sum + reward.amount, 0);
-
-      const summaryHtml = `
-        <div class="drawer-summary">
-          <div class="drawer-summary-card">
-            <div class="drawer-summary-label">Configured Goal</div>
-            <div class="drawer-summary-value">${escapeHtml(formatMetric(patient.metric, patient.target))}</div>
-          </div>
-          <div class="drawer-summary-card">
-            <div class="drawer-summary-label">Latest Reading</div>
-            <div class="drawer-summary-value">${escapeHtml(latestVital?.submittedValue || "No readings")}</div>
-          </div>
-          <div class="drawer-summary-card">
-            <div class="drawer-summary-label">Rewards Earned</div>
-            <div class="drawer-summary-value">${escapeHtml(formatCurrency(rewardTotal))}</div>
-          </div>
-        </div>
-      `;
-
-      const patientDetails = `
-        <section class="drawer-section">
-          <div class="drawer-section-head">
-            <div>
-              <h3>Patient Overview</h3>
-              <p>Editable enrollment and monitoring configuration.</p>
-            </div>
-            <button id="toggleEditPatientButton" class="button button-secondary button-small" type="button">
-              Edit Patient
-            </button>
-          </div>
-
-          <div id="patientDetailsDisplay">
-            <div class="details-grid">
-              <div class="detail-item">
-                <div class="detail-label">Clinic Chart ID</div>
-                <div class="detail-value">${escapeHtml(patient.chartId || "—")}</div>
-              </div>
-              <div class="detail-item">
-                <div class="detail-label">Assigned Doctor</div>
-                <div class="detail-value">${escapeHtml(patient.assignedDoctor || "—")}</div>
-              </div>
-              <div class="detail-item">
-                <div class="detail-label">Target Metric</div>
-                <div class="detail-value">${escapeHtml(patient.metric || "—")}</div>
-              </div>
-              <div class="detail-item">
-                <div class="detail-label">Target Value</div>
-                <div class="detail-value">${escapeHtml(formatMetric(patient.metric, patient.target))}</div>
-              </div>
-            </div>
-          </div>
-
-          <form id="editPatientForm" class="hidden" novalidate>
-            <div class="form-grid">
-              <div class="field">
-                <label for="editPatientName">Patient Name</label>
-                <input id="editPatientName" type="text" maxlength="120" value="${escapeHtml(patient.name)}" required />
-              </div>
-              <div class="field">
-                <label for="editPatientChartId">Clinic Chart ID</label>
-                <input id="editPatientChartId" type="text" maxlength="120" value="${escapeHtml(patient.chartId)}" required />
-              </div>
-              <div class="field">
-                <label for="editPatientDoctor">Assigned Doctor</label>
-                <input id="editPatientDoctor" type="text" maxlength="120" value="${escapeHtml(patient.assignedDoctor)}" />
-              </div>
-              <div class="field">
-                <label for="editPatientMetric">Target Metric Type</label>
-                <select id="editPatientMetric" required>
-                  ${metricOptionsHtml(patient.metric)}
-                </select>
-              </div>
-              <div class="field">
-                <label for="editPatientTarget">Target Value</label>
-                <input id="editPatientTarget" type="text" maxlength="50" value="${escapeHtml(patient.target)}" required />
-              </div>
-              <div class="field">
-                <label for="editPatientPin">Patient App PIN</label>
-                <input id="editPatientPin" type="text" maxlength="32" value="${escapeHtml(patient.appPin)}" required />
-              </div>
-            </div>
-
-            <div id="editPatientStatus" class="status-message" role="alert"></div>
-
-            <div class="button-row">
-              <button id="savePatientEditsButton" class="button button-primary" type="submit">
-                Save Changes
-              </button>
-              <button id="cancelPatientEditsButton" class="button button-secondary" type="button">
-                Cancel
-              </button>
-            </div>
-          </form>
-        </section>
-      `;
-
-      const workflowHtml = `
-        <section class="drawer-section">
-          <div class="drawer-section-head">
-            <div>
-              <h3>Internal Billing Workflow</h3>
-              <p>
-                This is an internal prototype worklist state. It does not submit,
-                adjudicate, or prove an insurance claim.
-              </p>
-            </div>
-          </div>
-
-          <div class="workflow-status-display">
-            <div>
-              <div class="detail-label">Current workflow state</div>
-              <div style="margin-top: 4px;">
-                <span class="pill ${workflowPillClass(patient.billingWorkflow)}">
-                  ${escapeHtml(patient.billingWorkflow || "Not Ready")}
-                </span>
-              </div>
-            </div>
-            ${
-              patient.billingReviewStatus
-                ? `<div style="text-align: right;">
-                    <div class="detail-label">System indicator</div>
-                    <div class="small" style="margin-top: 4px;">${escapeHtml(patient.billingReviewStatus)}</div>
-                  </div>`
-                : ""
-            }
-          </div>
-
-          <div class="workflow-actions">
-            ${workflowActionButtons(patient.billingWorkflow)}
-          </div>
-
-          <div id="workflowUpdateStatus" class="status-message" role="alert"></div>
-        </section>
-      `;
-
-      const vitalsHtml = `
-        <section class="drawer-section">
-          <div class="drawer-section-head">
-            <div>
-              <h3>Monitoring Activity</h3>
-              <p>Most recent ${MAX_PATIENT_DETAIL_HISTORY} Vitals Log records.</p>
-            </div>
-          </div>
-
-          ${
-            vitals.length
-              ? `<div class="timeline">
-                  ${vitals.map(renderVitalTimelineItem).join("")}
-                </div>`
-              : '<div class="empty-state">No Vitals Log records exist for this patient yet.</div>'
-          }
-        </section>
-      `;
-
-      const rewardsHtml = `
-        <section class="drawer-section">
-          <div class="drawer-section-head">
-            <div>
-              <h3>Rewards Wallet</h3>
-              <p>Recorded incentive transactions for this patient.</p>
-            </div>
-          </div>
-
-          <div class="wallet-summary">
-            <span>Total rewards earned</span>
-            <strong>${escapeHtml(formatCurrency(rewardTotal))}</strong>
-          </div>
-
-          ${
-            rewards.length
-              ? `<div>
-                  ${rewards.map(renderRewardRow).join("")}
-                </div>`
-              : '<div class="empty-state">No rewards wallet records exist for this patient yet.</div>'
-          }
-        </section>
-      `;
-
-      el.patientDrawerBody.innerHTML = `
-        ${summaryHtml}
-        ${patientDetails}
-        ${workflowHtml}
-        ${vitalsHtml}
-        ${rewardsHtml}
-        <p class="drawer-footer-note">
-          Patient-facing automated messages and system-generated activity notes
-          are shown for operational review. They are not independently verified
-          clinician documentation or payer-billing proof.
-        </p>
-      `;
-
-      wirePatientDrawerEvents();
-    }
-
-    function metricOptionsHtml(selectedMetric) {
-      const options = ["Blood Pressure", "Weight (lbs)", "HbA1c (%)", "BMI"];
-
-      return options
-        .map(
-          (metric) =>
-            `<option value="${escapeHtml(metric)}" ${metric === selectedMetric ? "selected" : ""}>${escapeHtml(metric)}</option>`
-        )
-        .join("");
-    }
-
-    function workflowActionButtons(status) {
-      const buttons = [];
-
-      if (status === "Not Ready" || !status) {
-        buttons.push(
-          '<button class="button button-primary button-small workflow-action" data-workflow-status="Ready for Review" type="button">Mark for Billing Review</button>'
-        );
-      }
-
-      if (status === "Ready for Review") {
-        buttons.push(
-          '<button class="button button-primary button-small workflow-action" data-workflow-status="Under Review" type="button">Start Review</button>'
-        );
-      }
-
-      if (status === "Under Review") {
-        buttons.push(
-          '<button class="button button-success button-small workflow-action" data-workflow-status="Ready to Bill" type="button">Mark Ready to Bill</button>'
-        );
-      }
-
-      if (status === "Ready to Bill") {
-        buttons.push(
-          '<button class="button button-success button-small workflow-action" data-workflow-status="Billed" type="button">Mark Billed</button>'
-        );
-      }
-
-      if (status === "On Hold") {
-        buttons.push(
-          '<button class="button button-primary button-small workflow-action" data-workflow-status="Ready for Review" type="button">Resume Review</button>'
-        );
-      }
-
-      if (status === "Billed") {
-        buttons.push(
-          '<button class="button button-secondary button-small workflow-action" data-workflow-status="Under Review" type="button">Reopen Review</button>'
-        );
-      }
-
-      if (!["Billed", "On Hold"].includes(status)) {
-        buttons.push(
-          '<button class="button button-danger button-small workflow-action" data-workflow-status="On Hold" type="button">Place On Hold</button>'
-        );
-      }
-
-      return buttons.join("");
-    }
-
-    function renderVitalTimelineItem(vital) {
-      const metric = vital.metricCategory || state.selectedPatient?.metric || "Reading";
-      const target = vital.targetBaseline || state.selectedPatient?.target || "—";
-
-      return `
-        <article class="timeline-item">
-          <div class="timeline-main">
-            <div>
-              <div class="timeline-reading">
-                ${escapeHtml(metric)} · ${escapeHtml(vital.submittedValue || "Value unavailable")}
-              </div>
-              <div class="timeline-meta">
-                Configured target: ${escapeHtml(target)} ·
-                ${escapeHtml(formatDateTime(vital.createdTime))}
-              </div>
-            </div>
-            <span class="pill ${resultPillClass(vital.evaluationStatus)}">
-              ${escapeHtml(vital.evaluationStatus || "Logged")}
-            </span>
-          </div>
-
-          ${
-            vital.coachMessage
-              ? `<details>
-                  <summary>Patient-facing automated message</summary>
-                  <p>${escapeHtml(vital.coachMessage)}</p>
-                </details>`
-              : ""
-          }
-
-          ${
-            vital.cptLog
-              ? `<details>
-                  <summary>System-generated activity note</summary>
-                  <p>${escapeHtml(vital.cptLog)}</p>
-                </details>`
-              : ""
-          }
-        </article>
-      `;
-    }
-
-    function renderRewardRow(reward) {
-      return `
-        <div class="wallet-row">
-          <div>
-            <div class="wallet-amount">${escapeHtml(formatCurrency(reward.amount))}</div>
-            <div class="wallet-meta">
-              ${escapeHtml(formatDateTime(reward.dateEarned))}
-              ${reward.transactionId !== "" ? ` · Transaction #${escapeHtml(reward.transactionId)}` : ""}
-            </div>
-          </div>
-          <span class="pill pill-success">${escapeHtml(reward.milestone || "Reward")}</span>
-        </div>
-      `;
-    }
-
-    function wirePatientDrawerEvents() {
-      const editToggle = document.getElementById("toggleEditPatientButton");
-      const editForm = document.getElementById("editPatientForm");
-      const detailDisplay = document.getElementById("patientDetailsDisplay");
-      const cancelEdit = document.getElementById("cancelPatientEditsButton");
-
-      editToggle?.addEventListener("click", () => {
-        detailDisplay.classList.add("hidden");
-        editForm.classList.remove("hidden");
-        editToggle.classList.add("hidden");
-      });
-
-      cancelEdit?.addEventListener("click", () => {
-        editForm.classList.add("hidden");
-        detailDisplay.classList.remove("hidden");
-        editToggle.classList.remove("hidden");
-      });
-
-      editForm?.addEventListener("submit", handlePatientEditSubmit);
-
-      document.querySelectorAll(".workflow-action").forEach((button) => {
-        button.addEventListener("click", () => {
-          updateBillingWorkflow(button.dataset.workflowStatus, button);
-        });
-      });
-    }
-
-    async function handlePatientEditSubmit(event) {
-      event.preventDefault();
-
-      if (!state.selectedPatient) return;
-
-      const formStatus = document.getElementById("editPatientStatus");
-      const saveButton = document.getElementById("savePatientEditsButton");
-
-      const name = document.getElementById("editPatientName").value.trim();
-      const chartId = document.getElementById("editPatientChartId").value.trim();
-      const doctor = document.getElementById("editPatientDoctor").value.trim();
-      const metric = document.getElementById("editPatientMetric").value;
-      const target = document.getElementById("editPatientTarget").value.trim();
-      const appPin = document.getElementById("editPatientPin").value.trim();
-
-      setStatus(formStatus, "");
-
-      if (!name || !chartId || !metric || !target || !appPin) {
-        setStatus(
-          formStatus,
-          "Patient Name, Clinic Chart ID, Target Metric Type, Target Value, and App PIN are required.",
-          "error"
-        );
-        return;
-      }
-
-      try {
-        validateTargetFormat(metric, target);
-      } catch (error) {
-        setStatus(formStatus, error.message, "error");
-        return;
-      }
-
-      setButtonLoading(saveButton, true, "Saving…");
-
-      try {
-        await patchPatientRecord(state.selectedPatient.recordId, {
-          Name: name,
-          "Clinic Chart ID": chartId,
-          "Assigned Doctor": doctor,
-          "Target Metric Type": metric,
-          "Target Value": target,
-          "App PIN": appPin
-        });
-
-        setStatus(formStatus, "Patient record updated successfully.", "success");
-
-        await refreshDashboard();
-
-        const refreshedPatient = state.allPatients.find(
-          (patient) => patient.recordId === state.selectedPatient.recordId
-        );
-
-        if (refreshedPatient) {
-          state.selectedPatient = refreshedPatient;
-          await openPatientDrawer(refreshedPatient.recordId);
-        }
-      } catch (error) {
-        setStatus(
-          formStatus,
-          `Unable to save patient changes. ${error.message || "Please try again."}`,
-          "error"
-        );
-      } finally {
-        setButtonLoading(saveButton, false);
-      }
-    }
-
-    async function updateBillingWorkflow(newStatus, button) {
-      if (!state.selectedPatient) return;
-
-      const statusElement = document.getElementById("workflowUpdateStatus");
-
-      if (!BILLING_WORKFLOW_OPTIONS.includes(newStatus)) {
-        setStatus(statusElement, "Invalid workflow status requested.", "error");
-        return;
-      }
-
-      setStatus(statusElement, "");
-      setButtonLoading(button, true, "Updating…");
-
-      try {
-        await patchPatientRecord(state.selectedPatient.recordId, {
-          "Billing Workflow Status": newStatus
-        });
-
-        const localPatient = state.allPatients.find(
-          (patient) => patient.recordId === state.selectedPatient.recordId
-        );
-
-        if (localPatient) {
-          localPatient.billingWorkflow = newStatus;
-        }
-
-        state.selectedPatient.billingWorkflow = newStatus;
-
-        if (state.patientDetail?.patient) {
-          state.patientDetail.patient.billingWorkflow = newStatus;
-        }
-
-        renderKpis();
-        applyRosterFiltersAndRender();
-        renderMonitoringSnapshot();
-        renderPatientDrawer();
-      } catch (error) {
-        setStatus(
-          statusElement,
-          `Unable to update billing workflow. ${error.message || "Please try again."}`,
-          "error"
-        );
-      } finally {
-        setButtonLoading(button, false);
-      }
-    }
-
-    async function patchPatientRecord(recordId, fields) {
-      return airtableRequest(recordUrl(TABLES.patients, recordId), {
-        method: "PATCH",
-        body: JSON.stringify({ fields })
-      });
-    }
-
-    /* ================================================================
-       ADD PATIENT
-       ================================================================ */
-
-    function openAddPatientDrawer() {
-      if (!state.selectedProvider) return;
-
-      el.addPatientForm.reset();
-      setStatus(el.addPatientStatus, "");
-
-      el.newPatientWorkflow.value = "Not Ready";
-      el.newPatientAssignedDoctor.value = state.selectedProvider.name;
-      el.addPatientProviderContext.textContent =
-        `This patient will be linked to ${state.selectedProvider.name}${
-          state.selectedProvider.clinicName
-            ? ` · ${state.selectedProvider.clinicName}`
-            : ""
-        }.`;
-
-      openDrawer(el.addPatientDrawer);
-      setTimeout(() => el.newPatientName.focus(), 150);
-    }
-
-    async function handleAddPatientSubmit(event) {
-      event.preventDefault();
-
-      if (!state.selectedProvider) return;
-
-      const name = el.newPatientName.value.trim();
-      const chartId = el.newPatientChartId.value.trim();
-      const metric = el.newPatientMetric.value;
-      const target = el.newPatientTarget.value.trim();
-      const pin = el.newPatientPin.value.trim();
-      const workflow = el.newPatientWorkflow.value;
-      const doctor = el.newPatientAssignedDoctor.value.trim();
-
-      setStatus(el.addPatientStatus, "");
-
-      if (!name || !chartId || !metric || !target || !pin) {
-        setStatus(
-          el.addPatientStatus,
-          "Patient Name, Clinic Chart ID, Target Metric Type, Target Value, and App PIN are required.",
-          "error"
-        );
-        return;
-      }
-
-      try {
-        validateTargetFormat(metric, target);
-      } catch (error) {
-        setStatus(el.addPatientStatus, error.message, "error");
-        return;
-      }
-
-      if (!BILLING_WORKFLOW_OPTIONS.includes(workflow)) {
-        setStatus(el.addPatientStatus, "Choose a valid billing workflow status.", "error");
-        return;
-      }
-
-      setButtonLoading(el.saveNewPatientButton, true, "Checking records…");
-
-      try {
-        await validateUniquePatientFields({
-          name,
-          chartId,
-          pin
-        });
-
-        setButtonLoading(el.saveNewPatientButton, true, "Creating patient…");
-
-        const payload = {
-          records: [
-            {
-              fields: {
-                Name: name,
-                "Clinic Chart ID": chartId,
-                "Assigned Doctor": doctor,
-                "Target Metric Type": metric,
-                "Target Value": target,
-                "App PIN": pin,
-                Providers: [state.selectedProvider.recordId],
-                "Billing Workflow Status": workflow
-              }
-            }
-          ]
-        };
-
-        const data = await airtableRequest(tableUrl(TABLES.patients), {
-          method: "POST",
-          body: JSON.stringify(payload)
-        });
-
-        const newRecord = data.records?.[0];
-
-        setStatus(
-          el.addPatientStatus,
-          "Patient created and linked to the selected provider.",
-          "success"
-        );
-
-        await refreshDashboard();
-
-        if (newRecord?.id) {
-          closeAllDrawers();
-          await openPatientDrawer(newRecord.id);
-        }
-      } catch (error) {
-        setStatus(
-          el.addPatientStatus,
-          `Unable to create patient. ${error.message || "Please try again."}`,
-          "error"
-        );
-      } finally {
-        setButtonLoading(el.saveNewPatientButton, false);
-      }
-    }
-
-    async function validateUniquePatientFields({ name, chartId, pin }) {
-      const safeName = escapeAirtableFormulaString(name);
-      const safeChartId = escapeAirtableFormulaString(chartId);
-      const safePin = escapeAirtableFormulaString(pin);
-
-      const formula = `OR({Name}='${safeName}', {Clinic Chart ID}='${safeChartId}', {App PIN}='${safePin}')`;
-
-      const records = await fetchAllRecords(TABLES.patients, {
-        filterByFormula: formula,
-        maxRecords: "10",
-        pageSize: "10"
-      });
-
-      if (!records.length) return;
-
-      const matches = records.map(normalizePatient);
-
-      const duplicateName = matches.some((patient) => patient.name === name);
-      const duplicateChartId = matches.some((patient) => patient.chartId === chartId);
-      const duplicatePin = matches.some((patient) => patient.appPin === pin);
-
-      const issues = [];
-
-      if (duplicateName) issues.push("Patient Name");
-      if (duplicateChartId) issues.push("Clinic Chart ID");
-      if (duplicatePin) issues.push("Patient App PIN");
-
-      throw new Error(
-        `A record already uses this ${issues.join(", ")}. Use unique synthetic prototype values.`
-      );
-    }
-
-    function validateTargetFormat(metric, target) {
-      if (metric === "Blood Pressure") {
-        const bp = String(target).trim();
-
-        if (!/^(\d{2,3})\s*\/\s*(\d{2,3})$/.test(bp)) {
-          throw new Error(
-            'For Blood Pressure, use a target in systolic/diastolic format, such as "130/80".'
-          );
-        }
-
-        return;
-      }
-
-      if (["Weight (lbs)", "HbA1c (%)", "BMI"].includes(metric)) {
-        if (!/^\d+(\.\d+)?$/.test(String(target).trim())) {
-          throw new Error(
-            `For ${metric}, use a numeric target value, such as "180", "7.0", or "25".`
-          );
-        }
-      }
-    }
-
-    /* ================================================================
-       EVENT WIRING
-       ================================================================ */
-
-    el.providerSelectForm.addEventListener("submit", handleProviderSelectSubmit);
-
-    el.refreshDashboardButton.addEventListener("click", refreshDashboard);
-
-    el.changeProviderButton.addEventListener("click", () => {
-      closeAllDrawers();
-      state.selectedProvider = null;
-      state.allPatients = [];
-      state.rosterPatients = [];
-      state.patientSummaries = new Map();
-      state.selectedPatient = null;
-      state.patientDetail = null;
-      showScreen("select");
-      el.providerSelect.focus();
     });
 
-    el.patientSearchInput.addEventListener("input", applyRosterFiltersAndRender);
-    el.workflowFilter.addEventListener("change", applyRosterFiltersAndRender);
-    el.metricFilter.addEventListener("change", applyRosterFiltersAndRender);
-
-    document.querySelectorAll("th.sortable").forEach((header) => {
-      header.addEventListener("click", () => {
-        const key = header.dataset.sortKey;
-
-        if (state.sort.key === key) {
-          state.sort.direction = state.sort.direction === "asc" ? "desc" : "asc";
-        } else {
-          state.sort.key = key;
-          state.sort.direction = "asc";
-        }
-
-        applyRosterFiltersAndRender();
+    mobileNav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileNav.classList.remove("open");
+        mobileMenuButton.textContent = "☰";
+        mobileMenuButton.setAttribute("aria-expanded", "false");
+        mobileMenuButton.setAttribute("aria-label", "Open navigation menu");
       });
     });
 
-    el.addPatientButton.addEventListener("click", openAddPatientDrawer);
-    el.addPatientForm.addEventListener("submit", handleAddPatientSubmit);
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
 
-    el.closePatientDrawerButton.addEventListener("click", closeAllDrawers);
-    el.closeAddPatientDrawerButton.addEventListener("click", closeAllDrawers);
-    el.cancelNewPatientButton.addEventListener("click", closeAllDrawers);
-    el.drawerBackdrop.addEventListener("click", closeAllDrawers);
+    function showFormStatus(message, type) {
+      contactFormStatus.textContent = message;
+      contactFormStatus.className = `form-status visible ${type}`;
+    }
 
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        closeAllDrawers();
-      }
-    });
+    contactForm.addEventListener("submit", (event) => {
+      event.preventDefault();
 
-    /* ================================================================
-       INITIALIZATION
-       ================================================================ */
+      const formData = new FormData(contactForm);
 
-    async function initialize() {
-      if (!isPatConfigured()) {
-        el.providerSelect.innerHTML =
-          '<option value="">Add AIRTABLE_PAT in the code first</option>';
+      const name = String(formData.get("name") || "").trim();
+      const email = String(formData.get("email") || "").trim();
+      const organization = String(formData.get("organization") || "").trim();
+      const message = String(formData.get("message") || "").trim();
 
-        setStatus(
-          el.providerSelectStatus,
-          "Before testing, replace the AIRTABLE_PAT placeholder near the top of this file with your dedicated prototype Airtable PAT.",
+      if (!name || !email || !message) {
+        showFormStatus(
+          "Please enter your name, email address, and message before sending.",
           "error"
         );
-
         return;
       }
 
-      try {
-        setStatus(el.providerSelectStatus, "Loading available provider workspaces…", "info");
-        await loadProviders();
-        setStatus(el.providerSelectStatus, "");
-      } catch (error) {
-        el.providerSelect.innerHTML =
-          '<option value="">Unable to load providers</option>';
+      contactSubmitButton.disabled = true;
+      contactSubmitButton.textContent = "Opening email…";
 
-        setStatus(
-          el.providerSelectStatus,
-          `Unable to load Providers. ${error.message || "Check your PAT, base access, table name, and browser network connection."}`,
-          "error"
-        );
-      }
-    }
+      const subject = encodeURIComponent("RPM Health Rewards Website Inquiry");
 
-    initialize();
+      const emailBody = encodeURIComponent(
+        `Name: ${name}\n` +
+        `Email: ${email}\n` +
+        `Organization: ${organization || "Not provided"}\n\n` +
+        `Message:\n${message}\n\n` +
+        `Note: The sender was reminded not to include patient or sensitive information.`
+      );
+
+      window.location.href =
+        `mailto:rpm.health.rewards@gmail.com?subject=${subject}&body=${emailBody}`;
+
+      showFormStatus(
+        "Your email application should now open with a prepared message. If it does not, email rpm.health.rewards@gmail.com directly.",
+        "success"
+      );
+
+      contactSubmitButton.disabled = false;
+      contactSubmitButton.innerHTML =
+        'Send Message <span aria-hidden="true">→</span>';
+    });
   </script>
 </body>
 </html>
-
